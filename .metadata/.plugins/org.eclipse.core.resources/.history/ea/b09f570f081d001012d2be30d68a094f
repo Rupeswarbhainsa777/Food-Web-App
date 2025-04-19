@@ -1,0 +1,5 @@
+package com.tap.Dao;
+
+public interface MenuDao {
+
+}

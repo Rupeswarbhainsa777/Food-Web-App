@@ -1,0 +1,27 @@
+package com.tap.DaoImple;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class RestaurantImp
+ {
+	
+	private Connection con = null;
+	private PreparedStatement pstmt = null;
+	private Statement stmt = null;
+	private ResultSet resultSet;
+	
+	private static final String ADD_RESTAURANT = "insert into `restaurant`(`restaurantName`,`imgagepath`,`rating`,`eta`,`cuisineType`,`address`,`isActive`,`restaurantOwnerId`)"
+			+ "values(?,?,?,?,?,?,?,?)";
+	
+	private static final String SELECT_ALL_RESTAURANT = "select * from `restaurant`";
+	private static final String SELECT_ON_RESTAURANTID = "select * from `restaurant` where `restaurant_id`=?";
+	private static final String UPDATE_ON_RESTAURANTNAME = "update `restaurant`  set `restaurantName`=?, `imagePath`=?, `rating`=?, `eta`=?, `cuisineType`=?,"
+			+ " `address`=?, `isActive`=? ,`restaurantOwnerId`=?  where `restaurant_id`=?";
+
+}
+
+
+

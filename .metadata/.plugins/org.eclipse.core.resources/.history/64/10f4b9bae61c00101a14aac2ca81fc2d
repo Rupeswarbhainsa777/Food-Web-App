@@ -1,0 +1,84 @@
+package com.tap.DaoImple;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import com.tap.modeal.Restaurant;
+
+public class RestaurantImp
+ {
+	private Connection con = null;
+	private String url = "jdbc:mysql://localhost/foodapp";
+	private String username = "root";
+	private String password = "@sumit222";
+
+	private PreparedStatement pstmt = null;
+	private Statement stmt = null;
+	private ResultSet resultSet;
+	
+	private static final String ADD_RESTAURANT = "insert into `restaurant`(`restaurantName`,`imgagepath`,`rating`,`eta`,`cuisineType`,`address`,`isActive`,`restaurantOwnerId`)"
+			+ "values(?,?,?,?,?,?,?,?)";
+	
+	private static final String SELECT_ALL_RESTAURANT = "select * from `restaurant`";
+	private static final String SELECT_ON_RESTAURANTID = "select * from `restaurant` where `restaurant_id`=?";
+	private static final String UPDATE_ON_RESTAURANTNAME = "update `restaurant`  set `restaurantName`=?, `imagePath`=?, `rating`=?, `eta`=?, `cuisineType`=?,"
+			+ " `address`=?, `isActive`=? ,`restaurantOwnerId`=?  where `restaurant_id`=?";
+	
+	private static final String DELETE = "delete from `restaurent` where `restaurant_id`=?";
+			
+			
+	
+		try 
+		{ 
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url, username, password);
+			
+		} catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		
+		
+		int addRestaurant(Restaurant res)
+		{
+		     
+	       pstmt=con.prepareStatement(ADD_RESTAURANT);
+	       pstmt.setString(1,res.getName());
+	       pstmt.setString(2,res.getImagepath());
+	       pstmt.setInt(3,res.getRating());
+	       pstmt.setString(4,res.getEta());
+	       pstmt.setString(5,res.getCuisineType());
+	       pstmt.setString(6,res.getAddress());
+	       pstmt.setBoolean(7,res.getIsActive());
+	       pstmt.setString(8,res.getRestaurantOwnerId());
+	       
+			
+		}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

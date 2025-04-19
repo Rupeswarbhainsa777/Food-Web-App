@@ -1,0 +1,5 @@
+package com.tap.DaoImplemantation;
+
+public interface UserDao {
+
+}
