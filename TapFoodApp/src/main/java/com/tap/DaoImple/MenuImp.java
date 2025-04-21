@@ -23,7 +23,9 @@ public class MenuImp implements MenuDao {
 
     public MenuImp() {
         try {
+           
             Class.forName("com.mysql.cj.jdbc.Driver");
+
             System.out.println("Driver loaded");
             connection = DriverManager.getConnection(url, username, password);
             System.out.println("Connection established");

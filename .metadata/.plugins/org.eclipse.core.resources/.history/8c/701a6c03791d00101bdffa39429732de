@@ -1,0 +1,18 @@
+
+package com.tap.Test;
+//import com.tap.Dao.OrderDao;
+import com.tap.modeal.Orders;
+import com.tap.DaoImple.*;
+
+
+public class Test4
+
+{
+    public static void main(String[] args) {
+        OrdersImp orderDao = new OrdersImp();
+
+        Orders order = new Orders(0, 1, 101, 450.0, "Cash", "Pending");
+
+        orderDao.addOrder(order);
+    }
+}

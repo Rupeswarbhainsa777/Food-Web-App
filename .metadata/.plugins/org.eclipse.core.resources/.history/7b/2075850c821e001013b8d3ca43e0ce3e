@@ -1,0 +1,57 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.tap.modeal.Restaurant" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Restaurants</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Restaurants</h1>
+
+        <%
+            Object obj = request.getAttribute("restaurant");
+            List<Restaurant> restaurants = null;
+
+            if (obj instanceof List<?>) {
+                restaurants = (List<Restaurant>) obj;
+            }
+        %>
+
+        <% if (restaurants != null && !restaurants.isEmpty()) { %>
+            <% for (Restaurant r : restaurants) { %>
+                <div class="restaurant-card">
+                    <h2 class="restaurant-name"><%= r.getName()%></h2>
+                    <p class="restaurant-address"><%= r.getAddress() %></p>
+                </div>
+            <% } %>
+        <% } else { %>
+            <p>No restaurants found.</p>
+        <% } %>
+    </div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

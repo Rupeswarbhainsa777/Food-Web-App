@@ -1,0 +1,80 @@
+<%@ page import="com.tap.modeal.Restaurant" %>
+<%@ page import="java.util.List" %>
+     
+       <%@ page import="java.util.ArrayList" %>
+<%@ page import="com.tap.modeal.Restaurant" %>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Restaurant List</title>
+<style>
+  .card {
+    border: 1px solid #ddd;
+    padding: 16px;
+    margin: 10px;
+    border-radius: 8px;
+    max-width: 400px;
+    background-color: #f9f9f9;
+  }
+</style>
+</head>
+<body>
+
+
+
+
+       
+       
+  
+<%
+    ArrayList<Restaurant> restaurants = (ArrayList<Restaurant>) request.getAttribute("restaurant");
+%>
+
+<div class="container">
+    <h1>Restaurants</h1>
+
+    <% for (Restaurant r : restaurants) { %>
+        <div class="restaurant-card">
+            <h2 class="restaurant-name"><%= r.getName() %></h2>
+            <p class="restaurant-address"><%= r.getAddress() %></p>
+        </div>
+    <% } %>
+</div>
+       
+       
+       
+       
+   
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

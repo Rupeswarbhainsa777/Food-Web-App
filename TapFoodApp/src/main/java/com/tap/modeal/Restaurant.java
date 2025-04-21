@@ -3,6 +3,8 @@ package com.tap.modeal;
 public class Restaurant
 {
 	
+	
+
 	private int restaurantId;
 	private String name;
 	private String imagepath;
@@ -106,7 +108,12 @@ public class Restaurant
 	
 	
 	
-	
+	@Override
+	public String toString() {
+		return "Restaurant [restaurantId=" + restaurantId + ", name=" + name + ", imagepath=" + imagepath + ", rating="
+				+ rating + ", eta=" + eta + ", cuisineType=" + cuisineType + ", address=" + address + ", isActive="
+				+ isActive + ", restaurantOwnerId=" + restaurantOwnerId + "]";
+	}
 	
 
 

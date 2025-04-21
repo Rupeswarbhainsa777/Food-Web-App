@@ -1,0 +1,25 @@
+package com.tap.DaoImple;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import com.tap.Dao.OrderItemDao;
+
+public class OrderItemImp implements OrderItemDao 
+{
+
+	private Connection con = null;
+	private PreparedStatement pstmt = null;
+	private ResultSet resultSet;
+	private final String url = "jdbc:mysql://localhost/foodapp";
+	private final String username = "root";
+	private final String password = "@sumit222";
+	
+	
+	private static final String insert = "insert into `orderItem`(`userId`,`menueId`,`quantity`,`rating`,`price`,`name`) values(?,?,?,?,?,?)";
+	private static final String select = "select * from `orderItem` where orderItemId=?";
+	private static final String selectAll =  "select * from `orderItem`";
+	private static final String  update =  "UPDATE `orderItem` set `userId`=?,`menueId`=?, `name`=?, "
+			+ "`rating`=?, `quantity`=?, `price`=?, WHERE `orderItemId`=?";
+}

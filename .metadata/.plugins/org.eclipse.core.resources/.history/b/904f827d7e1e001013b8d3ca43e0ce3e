@@ -1,0 +1,47 @@
+package com.tap.controller;
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import com.tap.DaoImple.RestaurantImp;
+import com.tap.modeal.Restaurant;
+
+
+@WebServlet("/ResturantServlet")
+public class ResturantServlet extends HttpServlet 
+{
+	
+	
+	// or similar
+	
+	
+	
+	@Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	    RestaurantImp request = new RestaurantImp();
+	    list<Restaurant> restaurantList = restaurantDao.getAllRestaurants(); 
+//	    ArrayList<Restaurant> restaurant = rest.getAllRestaurant();
+
+	    request.setAttribute("restaurant", restaurantList);
+	   // req.setAttribute("restaurant", restaurant); // ✅ use request scope instead of session
+
+
+//	    RequestDispatcher rd = req.getRequestDispatcher("resturent.jsp"); // ✅ match JSP file name
+//	    
+//	    rd.forward(req, resp);
+	    
+	    
+	    request.getRequestDispatcher("resturent.jsp").forward(request, response);
+	}
+
+	
+
+}

@@ -17,9 +17,10 @@ public class UserImp implements UserDao {
 	private String url = "jdbc:mysql://localhost/foodapp";
 	private String username = "root";
 	private String password = "@sumit222";
+	
+	
+	String insertQuery = "INSERT INTO `user` ( `name`,`email`,`phoneno`,`address`,`password`,`role`) VALUES (?, ?, ?, ?, ?, ?)";
 
-	String insertQuery = "INSERT INTO `user` ( `name`,`email`,`phoneno`,`address`,`password`,`role`) VALUES "
-			+ "(?,?,?,?,?,?)";
 
 	String retreiveQuery = "SELECT * FROM `user` WHERE `email` = ?";
 	String updateQuery = "UPDATE `user` SET `email` = ?,`address` = ?,`username` = ? , `password` = ? , `role` = ? WHERE `userId` = ?";
@@ -47,11 +48,13 @@ public class UserImp implements UserDao {
 		try {
 			pstm = con.prepareStatement(insertQuery);
 
-			pstm.setString(1, user.getUserName());
-			pstm.setString(2, user.getPassword());
-			pstm.setString(3, user.getEmail());
+			pstm.setString(1, user.getName());
+			pstm.setString(2, user.getEmail());
+			pstm.setString(3, user.getPhoneNo());
 			pstm.setString(4, user.getAddress());
-			pstm.setString(5, user.getRole());
+			pstm.setString(5, user.getPassword());
+			pstm.setString(6, user.getRole());
+
 			return pstm.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

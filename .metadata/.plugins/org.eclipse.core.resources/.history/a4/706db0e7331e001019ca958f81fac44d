@@ -1,0 +1,162 @@
+package com.tap.DaoImple;
+
+import com.tap.Dao.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import com.tap.modeal.Restaurant;
+
+public class RestaurantImp implements ResturantDao 
+{
+	private Connection con = null;
+	private String url = "jdbc:mysql://localhost/foodapp";
+	private String username = "root";
+	private String password = "@sumit222";
+
+	private PreparedStatement pstmt = null;
+	private Statement stmt = null;
+	private ResultSet resultSet = null;
+
+	private static final String ADD_RESTAURANT = "insert into `restaurant`(`restaurantName`,`imgagepath`,`rating`,`eta`,`cuisineType`,`address`,`isActive`,`restaurantOwnerId`)"
+			+ "values(?,?,?,?,?,?,?,?)";
+
+	private static final String SELECT_ALL_RESTAURANT = "select * from `restaurant`";
+	private static final String SELECT_RESTAURANT = "select * from `restaurant` where `restaurant_id`=?";
+	private static final String UPDATE_ON_RESTAURANTNAME = "update `restaurant`  set `restaurantName`=?, `imagePath`=?, `rating`=?, `eta`=?, `cuisineType`=?,"
+			+ " `address`=?, `isActive`=? ,`restaurantOwnerId`=?  where `restaurant_id`=?";
+
+	private static final String DELETE = "delete from `restaurent` where `restaurant_id`=?";
+
+	public RestaurantImp() {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url, username, password);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Override
+	public void addRestaurant(Restaurant restaurant)
+	{
+		try {
+
+			pstmt = con.prepareStatement(ADD_RESTAURANT);
+			pstmt.setString(1, restaurant.getName());
+			pstmt.setString(2, restaurant.getImagepath());
+			pstmt.setInt(3, restaurant.getRating());
+			pstmt.setString(4, restaurant.getEta());
+			pstmt.setString(5, restaurant.getCuisineType());
+			pstmt.setString(6, restaurant.getAddress());
+			pstmt.setBoolean(7, restaurant.getIsActive());
+			pstmt.setString(8, restaurant.getRestaurantOwnerId());
+			pstmt.execute();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Override
+	public Restaurant getRestaurant(int restaurantId) {
+	    Restaurant res = null;
+
+	    try {
+	        pstmt = con.prepareStatement(SELECT_RESTAURANT);
+	        pstmt.setInt(1, restaurantId);
+	        resultSet = pstmt.executeQuery();
+
+	        if (resultSet.next()) {
+	            int id = resultSet.getInt("restaurant_id");
+	            String name = resultSet.getString("restaurantName");
+	            String imagepath = resultSet.getString("imgagepath");
+	            int rating = resultSet.getInt("rating");
+	            String eta = resultSet.getString("eta");
+	            String cuisineType = resultSet.getString("cuisineType");
+	            String address = resultSet.getString("address");
+	            boolean isActive = resultSet.getBoolean("isActive");
+	            String restaurantOwnerId = resultSet.getString("restaurantOwnerId");
+
+	            res = new Restaurant(id, name, imagepath, rating, eta, cuisineType, address, isActive, restaurantOwnerId);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return res;
+	}
+
+
+	@Override
+	public void updateRestaurant(Restaurant restaurant) {
+	    try {
+	        pstmt = con.prepareStatement(UPDATE_ON_RESTAURANTNAME);
+	        pstmt.setString(1, restaurant.getName());
+	        pstmt.setString(2, restaurant.getImagepath());
+	        pstmt.setInt(3, restaurant.getRating());
+	        pstmt.setString(4, restaurant.getEta());
+	        pstmt.setString(5, restaurant.getCuisineType());
+	        pstmt.setString(6, restaurant.getAddress());
+	        pstmt.setBoolean(7, restaurant.getIsActive());
+	        pstmt.setString(8, restaurant.getRestaurantOwnerId());
+	        pstmt.setInt(9, restaurant.getRestaurantId());
+
+	        System.out.println(pstmt.executeUpdate());
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+	@Override
+	public void deleteRestaurant(int restaurantId) {
+	    try {
+	        pstmt = con.prepareStatement(DELETE);
+	        pstmt.setInt(1, restaurantId);
+	        int rowsAffected = pstmt.executeUpdate();
+//	        System.out.println("Deleted rows: " + rowsAffected);
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+
+	@Override
+	public ArrayList<Restaurant> getAllRestaurant() 
+	{
+	    ArrayList<Restaurant> list = new ArrayList<>();
+
+	    try {
+	        stmt = con.createStatement();
+	        resultSet = stmt.executeQuery(SELECT_ALL_RESTAURANT);
+
+	        while (resultSet.next()) {
+	            int id = resultSet.getInt("restaurant_id");
+	            String name = resultSet.getString("restaurantName");
+	            String imagePath = resultSet.getString("imagePath");
+	            int rating = resultSet.getInt("rating"); // assuming it's int
+	            String eta = resultSet.getString("eta");
+	            String cuisineType = resultSet.getString("cuisineType");
+	            String address = resultSet.getString("address");
+	            boolean isActive = resultSet.getBoolean("isActive");
+	            String restaurantOwnerId = resultSet.getString("restaurantOwnerId");
+
+	            Restaurant rest = new Restaurant(id, name, imagePath, rating, eta, cuisineType, address, isActive, restaurantOwnerId);
+	            list.add(rest);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return list;
+	}
+
+	
+
+}

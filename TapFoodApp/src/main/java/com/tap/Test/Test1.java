@@ -1,0 +1,35 @@
+package com.tap.Test;
+
+
+
+
+import com.tap.Dao.*;
+import com.tap.DaoImple.*;
+import com.tap.modeal.User;
+
+import java.sql.Timestamp;
+
+public class Test1 {
+    public static void main(String[] args)
+    {
+        UserDao dao = new UserImp();
+
+        User user = new User();
+        user.setName("Rupeswar");
+        user.setEmail("rupeswar@example.com");
+        user.setPhoneNo("9876543210");
+        user.setAddress("Hyderabad");
+        user.setUserName("rupes");
+        user.setPassword("pass123");
+        user.setRole("customer");
+        user.setCreateDate(new Timestamp(System.currentTimeMillis()));
+        user.setLastLogin(new Timestamp(System.currentTimeMillis()));
+
+        int result = dao.addUser(user);
+        if (result > 0) {
+            System.out.println("User added successfully!");
+        } else {
+            System.out.println("Failed to add user.");
+        }
+    }
+}

@@ -1,0 +1,31 @@
+package com.tap.Test;
+
+import com.tap.Dao.*;
+import com.tap.DaoImple.*;
+import com.tap.modeal.*;
+
+
+import com.tap.DaoImple.OrdersImp;
+import com.tap.modeal.Orders;
+
+public class Test4 {
+    public static void main(String[] args) {
+        // Create an instance of the DAO implementation
+        OrdersImp ordersImp = new OrdersImp();
+
+        // Create a test Orders object
+        Orders order = new Orders(
+            0,               // orderId (will be auto-generated in your DAO)
+            1,               // restaurantId (make sure it exists in DB)
+            101,             // userId (make sure it exists in DB)
+            299.99,          // totalAmount
+            "CASH",          // modeOfPayment
+            "PENDING"        // status
+        );
+
+        // Add the order
+        ordersImp.addOrder(order);
+
+        System.out.println("✅ Test order inserted successfully!");
+    }
+}
