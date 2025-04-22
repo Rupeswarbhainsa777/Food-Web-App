@@ -25,8 +25,10 @@
     <fullyQualifiedTypeName name="com.tap.modeal.OrderItem"/>
     <fullyQualifiedTypeName name="com.tap.DaoImple.OrderItemImp"/>
     <fullyQualifiedTypeName name="com.tap.DaoImple.RestaurantImp"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="jakarta.servlet.http.HttpSession"/>
-    <fullyQualifiedTypeName name="jakarta.servlet.RequestDispatcher"/>
     <fullyQualifiedTypeName name="org.apache.jasper.tagplugins.jstl.core.Out"/>
+    <fullyQualifiedTypeName name="com.tap.DaoImple.MenuImp"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="jakarta.servlet.RequestDispatcher"/>
 </qualifiedTypeNameHistroy>

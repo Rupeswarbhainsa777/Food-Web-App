@@ -1,0 +1,70 @@
+<%@ page import="java.util.List" %>
+<%@ page import="com.tap.modeal.Menu" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .menu-card {
+            background-color: white;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .menu-name {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .price {
+            color: #fc8019;
+            font-weight: bold;
+        }
+
+        .description {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Menu Items</h1>
+
+    <%
+        List<Menu> menuList = (List<Menu>) request.getAttribute("menuList");
+        if (menuList != null) {
+            for (Menu m : menuList) {
+    %>
+    <div class="menu-card">
+        <div class="menu-name"><%= m.getItemName() %></div>
+        <div class="description"><%= m.getDescription() %></div>
+        <div class="price">₹<%= m.getPrice() %></div>
+    </div>
+    <%
+            }
+        } else {
+    %>
+    <p>No menu items found.</p>
+    <%
+        }
+    %>
+</div>
+
+</body>
+</html>
+
