@@ -1,0 +1,104 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.tap.modeal.Menu" %>
+<%@ page import="java.util.*" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu - Tap Food</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .menu-container {
+            margin-top: 40px;
+        }
+        .card img {
+            height: 180px;
+            object-fit: cover;
+        }
+        .footer {
+            background-color: #2e2e2e;
+            color: white;
+            padding: 20px 0;
+            margin-top: 40px;
+            text-align: center;
+        }
+        .order-btn {
+            background-color: #fc8019;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+        }
+        .order-btn:hover {
+            background-color: #e56d00;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="d-flex justify-content-between align-items-center px-4 py-3 shadow bg-white">
+    <div class="h4 text-warning font-weight-bold">Tap Food</div>
+    <nav>
+        <ul class="nav">
+            <li class="nav-item"><a class="nav-link text-dark" href="home.jsp">Home</a></li>
+            <li class="nav-item"><a class="nav-link text-dark" href="#">Cart</a></li>
+            <li class="nav-item"><a class="nav-link text-dark" href="LogoutServlet">Logout</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Menu Items -->
+<div class="container menu-container">
+    <h2 class="mb-4 text-center">Menu</h2>
+    <div class="row">
+        <%
+            Object obj = request.getAttribute("menuList");
+            if (obj != null) {
+                List<Menu> menuList = (List<Menu>) obj;
+                for (MenuItem item : menuList) {
+        %>
+        <div class="col-md-4 mb-4">
+            <form action="OrderServlet" method="post">
+                <input type="hidden" name="itemId" value="<%= item.getId() %>">
+                <div class="card">
+                    <img src="<%= item.getImagePath() %>" class="card-img-top" alt="<%= item.getName() %>">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= item.getName() %></h5>
+                        <p class="card-text"><%= item.getDescription() %></p>
+                        <p class="card-text font-weight-bold">₹<%= item.getPrice() %></p>
+                        <div class="text-center">
+                            <input type="submit" class="order-btn" value="Add to Cart">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <%
+                }
+            } else {
+        %>
+            <div class="col-12 text-center">
+                <p>No menu items available.</p>
+            </div>
+        <%
+            }
+        %>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <p>&copy; 2024 Taste-Tribe</p>
+</footer>
+
+</body>
+</html>
+
+

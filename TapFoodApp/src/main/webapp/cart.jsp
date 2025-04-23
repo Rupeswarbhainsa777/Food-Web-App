@@ -1,0 +1,117 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.tap.modeal.CartItem" %>
+<%@ page import="java.util.*" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart - Tap Food</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .cart-container {
+            margin-top: 40px;
+        }
+        .card img {
+            height: 100px;
+            object-fit: cover;
+        }
+        .footer {
+            background-color: #2e2e2e;
+            color: white;
+            padding: 20px 0;
+            margin-top: 40px;
+            text-align: center;
+        }
+        .checkout-btn {
+            background-color: #fc8019;
+            border: none;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 5px;
+        }
+        .checkout-btn:hover {
+            background-color: #e56d00;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="d-flex justify-content-between align-items-center px-4 py-3 shadow bg-white">
+    <div class="h4 text-warning font-weight-bold">Tap Food</div>
+    <nav>
+        <ul class="nav">
+            <li class="nav-item"><a class="nav-link text-dark" href="home.jsp">Home</a></li>
+            <li class="nav-item"><a class="nav-link text-dark" href="LogoutServlet">Logout</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Cart Items -->
+<div class="container cart-container">
+    <h2 class="mb-4 text-center">Your Cart</h2>
+    <%
+        double total = 0;
+        Object obj = request.getAttribute("cartItems");
+        if (obj != null) {
+            List<CartItem> cartItems = (List<CartItem>) obj;
+            if (cartItems.isEmpty()) {
+    %>
+        <div class="text-center"><p>Your cart is empty.</p></div>
+    <%
+            } else {
+    %>
+        <div class="row">
+            <%
+                for (CartItem item : cartItems) {
+                    double itemTotal = item.getPrice() * item.getQuantity();
+                    total += itemTotal;
+            %>
+            <div class="col-md-6 mb-4">
+                <div class="card p-3 d-flex flex-row align-items-center">
+                    <img src="<%= item.getImagePath() %>" class="mr-3" width="100" alt="<%= item.getName() %>">
+                    <div>
+                        <h5><%= item.getName() %></h5>
+                        <p>Price: ₹<%= item.getPrice() %></p>
+                        <p>Quantity: <%= item.getQuantity() %></p>
+                        <p>Total: ₹<%= itemTotal %></p>
+                        <form action="RemoveFromCartServlet" method="post" style="display:inline;">
+                            <input type="hidden" name="itemId" value="<%= item.getId() %>">
+                            <button class="btn btn-danger btn-sm">Remove</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <%
+                }
+            %>
+        </div>
+        <div class="text-center mt-4">
+            <h4>Total Amount: ₹<%= total %></h4>
+            <form action="PlaceOrderServlet" method="post">
+                <button class="checkout-btn mt-3">Place Order</button>
+            </form>
+        </div>
+    <%
+            }
+        } else {
+    %>
+        <div class="text-center"><p>Cart data not found.</p></div>
+    <%
+        }
+    %>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <p>&copy; 2024 Taste-Tribe</p>
+</footer>
+
+</body>
+</html>

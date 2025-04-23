@@ -31,11 +31,13 @@ public class ResturantServlet extends HttpServlet
 //          for(Restaurant res: restaurant)
 //          {
 //        	  System.out.println(res.getAddress());
+//        	  System.out.println(res.);
 //        	  
 //          }
 	   
 	    req.setAttribute("restaurant", restaurant); 
-	    RequestDispatcher rd = req.getRequestDispatcher("resturent.jsp");
+//	    RequestDispatcher rd = req.getRequestDispatcher("resturent.jsp");
+	    RequestDispatcher rd = req.getRequestDispatcher("ResturentMain.jsp");
 	    rd.forward(req, resp);
 	
 	}

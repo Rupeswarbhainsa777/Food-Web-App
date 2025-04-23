@@ -1,0 +1,78 @@
+<%@ page import="java.util.List" %>
+<%@ page import="com.tap.modeal.Menu" %>
+
+<html>
+<head>
+    <title>Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .menu-container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .menu-item {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            background-color: #f9f9f9;
+        }
+
+        .menu-item img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-right: 20px;
+        }
+
+        .menu-details {
+            flex: 1;
+        }
+
+        .menu-details h3 {
+            margin: 0;
+            color: #333;
+        }
+
+        .menu-details p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<h1 style="text-align: center;">Our Menu</h1>
+<div class="menu-container">
+    <%
+    List<Menu> menuList = (List<Menu>) session.getAttribute("menuList");
+
+    if (menuList != null && !menuList.isEmpty()) {
+        for (Menu me : menuList) {
+%>
+            <div class="menu-item">
+                <h3><%= me.getItemName() %></h3>
+                <p>Price: ₹<%= me.getItemPrice() %></p>
+                <p><%= me.getDescription() %></p>
+            </div>
+<%
+        }
+    } else {
+%>
+        <p style="text-align: center;">No menu items available or not loaded.</p>
+<%
+    }
+%>
+    
+</div>
+
+</body>
+</html>
+
+

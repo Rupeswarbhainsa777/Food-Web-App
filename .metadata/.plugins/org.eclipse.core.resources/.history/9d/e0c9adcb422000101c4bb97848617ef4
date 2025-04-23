@@ -1,0 +1,99 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Swiggy Clone</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .navbar {
+            background-color: #fc8019;
+        }
+        .navbar-brand, .nav-link {
+            color: white !important;
+        }
+        .hero {
+            padding: 60px 20px;
+            background: url('https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/homepage_image') no-repeat center;
+            background-size: cover;
+            color: white;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 3rem;
+        }
+        .food-cards {
+            margin-top: 40px;
+        }
+        .card img {
+            height: 200px;
+            object-fit: cover;
+        }
+        .footer {
+            background-color: #2e2e2e;
+            color: white;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+        .card{
+        color: black;
+        }
+    </style>
+</head>
+<body>
+  
+  
+  
+<nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="#">Swiggy</a>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Signup</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="hero">
+    <h1 class="card">Order Food Online from Your Favorite Restaurants</h1>
+    <p  class="card" >Delicious meals delivered to your doorstep.</p>
+</div>
+
+<div class="container food-cards">
+    <div class="row">
+        <%
+            // You could dynamically loop food items from backend using JSTL or scriptlets
+            String[] dishes = {"Pizza", "Burger", "Biryani", "Pasta"};
+            String[] images = {
+                "https://source.unsplash.com/400x300/?pizza",
+                "https://source.unsplash.com/400x300/?burger",
+                "https://source.unsplash.com/400x300/?biryani",
+                "https://source.unsplash.com/400x300/?pasta"
+            };
+            for (int i = 0; i < dishes.length; i++) {
+        %>
+        <div class="col-md-3">
+            <div class="card mb-4">
+                <img src="<%= images[i] %>" class="card-img-top" alt="<%= dishes[i] %>">
+                <div class="card-body">
+                    <h5 class="card-title"><%= dishes[i] %></h5>
+                    <p class="card-text">Order now from top-rated restaurants.</p>
+                    <a href="#" class="btn btn-primary">Order Now</a>
+                </div>
+            </div>
+        </div>
+        <% } %>
+    </div>
+</div>
+
+<footer class="footer text-center">
+    <p>&copy; 2025 Swiggy Clone. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

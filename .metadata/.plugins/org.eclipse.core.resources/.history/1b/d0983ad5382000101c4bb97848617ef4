@@ -1,0 +1,71 @@
+<%@ page import="java.util.List" %>
+<%@ page import="com.tap.modeal.Menu" %>
+
+<%
+   
+%>
+
+<html>
+<head>
+    <title>Menu</title>
+    <style>
+        .menu-container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .menu-item {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            background-color: #f9f9f9;
+        }
+
+        .menu-item img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-right: 20px;
+        }
+
+        .menu-details {
+            flex: 1;
+        }
+
+        .menu-details h3 {
+            margin: 0;
+            color: #333;
+        }
+
+        .menu-details p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<h1 style="text-align: center;">Menu</h1>
+<%
+
+
+
+
+List<Menu> menuList = (List<Menu>) session.getAttribute("menuList");
+for(Menu me : menuList)
+{
+     out.print(	me.getItemName()+" "+me.getRating());
+	
+}
+ 
+%>
+   
+
+    
+</body>
+</html>
+
+

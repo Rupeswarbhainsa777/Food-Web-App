@@ -1,0 +1,56 @@
+<%@ page import="java.util.List" %>
+<%@ page import="com.tap.modeal.Menu" %>
+
+<html>
+<head>
+    <title>Swiggy Menu</title>
+    <style>
+        body { font-family: Arial; }
+        .menu-container { max-width: 1000px; margin: auto; padding: 20px; }
+        .menu-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            background: #f8f8f8;
+        }
+        .menu-item img {
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+            margin-right: 20px;
+            object-fit: cover;
+        }
+        .menu-details h3 { margin: 0; }
+        .menu-details p { margin: 5px 0; }
+    </style>
+</head>
+<body>
+
+<h2 style="text-align:center;">Swiggy Clone - Menu</h2>
+<div class="menu-container">
+<%
+    List<Menu> menuList = (List<Menu>) request.getAttribute("menuList");
+    if (menuList != null) {
+        for (Menu m : menuList) {
+%>
+        <div class="menu-item">
+            <img src="img/item-11.jpeg" alt="<%= m.getItemName() %>">
+            <div class="menu-details">
+                <h3><%= m.getItemName() %></h3>
+                <p><strong>Price:</strong> ₹<%= m.getItemPrice() %></p>
+                <p><%= m.getDescription() %></p>
+            </div>
+        </div>
+<%
+        }
+    } else {
+%>
+    <p>No menu data available.</p>
+<%
+    }
+%>
+</div>
+</body>
+</html>
