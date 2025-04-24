@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Swiggy Clone</title>
+    <title>Clone</title>
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
@@ -54,6 +54,8 @@
         .submit-button:hover {
             background-color: #e57012;
         }
+        .col-md-4 mb-4{
+        }
         
     </style>
 </head>
@@ -67,7 +69,7 @@
             <li class="nav-item"><a class="nav-link text-dark" href="#">Home</a></li>
             <li class="nav-item"><a class="nav-link text-dark" href="#">Search</a></li>
             <li class="nav-item"><a class="nav-link text-dark" href="Login.html">Login</a></li>
-            <li class="nav-item"><a class="nav-link text-dark" href="sinin.html">Sign in</a></li>
+            <li class="nav-item"><a class="nav-link text-dark" href="Sigin.html">Sign in</a></li>
         </ul>
     </nav>
 </header>
@@ -82,10 +84,14 @@
                 for (Restaurant res : restaur) {
         %>
         <div class="col-md-4 mb-4">
-            <form action="CallingMenuServlet" method="post">
-                <input type="hidden" name="restaurantId" value="<%= res.getRestaurantId() %>">
-                <div class="card">
-                    <img src="<%= res.getImagepath() %>" class="card-img-top" alt="<%= res.getName() %>">
+            
+               <a href="Menu?restaurantId=<%=res.getRestaurantId()%>">
+               
+               	 <input type="hidden" name="restaurantId" value="<%= res.getRestaurantId() %>">
+                   <div class="card">
+                   
+                         <h3><%= res.getName() %></h3>
+                    <img src="<%= res.getImagepath()%>" class="card-img-top" alt="<%= res.getName() %>">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold"><%= res.getName() %></h5>
                         <div class="d-flex justify-content-between mb-2">
@@ -99,7 +105,9 @@
                         </div>
                     </div>
                 </div>
-            </form>
+               
+               </a>
+            
         </div>
         <%
                 }
@@ -110,8 +118,9 @@
 
 <!-- Footer -->
 <footer class="footer">
-    <p>&copy; 2024 Taste-Tribe</p>
+    <p>&copy; 2025 </p>
 </footer>
+
 
 </body>
 </html>

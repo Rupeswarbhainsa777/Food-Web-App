@@ -31,12 +31,15 @@ public class Menue extends HttpServlet {
 //		RequestDispatcher rd = req.getRequestDispatcher("Menu.jsp");
 //		rd.forward(req, resp);
 //		
+      	
+      	int res = Integer.parseInt(req.getParameter("restaurantId"));
 		
-		List<Menu> menuItems = menuDao.getAll(); // however you're fetching it
+//		List<Menu> menuItems = menuDao.getAll(); 
+      	List<Menu> menuItems = menuDao.getAllMenuByRestarent(res);
 		HttpSession session = req.getSession();
 		session.setAttribute("menuList", menuItems);
 
-		// Then forward to JSP
+		
 		RequestDispatcher rd = req.getRequestDispatcher("Menu.jsp");
 		rd.forward(req, resp);
 
