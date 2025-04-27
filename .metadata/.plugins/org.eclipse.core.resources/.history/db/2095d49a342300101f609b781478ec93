@@ -1,0 +1,36 @@
+package com.tap.controller;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import com.tap.modeal.*;
+import java.io.IOException;
+
+@WebServlet("/Cart")
+public class CartServlet extends HttpServlet {
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		
+		   HttpSession  sesson= req.getSession();
+		   Cart cart = (Cart)sesson.getAttribute("cart");
+		   
+		 
+		   
+		   int restaurantIdParam = Integer.parseInt(req.getParameter("restaurantId"));
+		   Integer currentResturentid = (Integer)sesson.getAttribute("restaurantId");
+		   
+		   
+		   if(cart==null || restaurantIdParam != currentResturentid)
+		   {
+			   cart= new Cart();
+		   }
+		   
+		
+	}
+
+}

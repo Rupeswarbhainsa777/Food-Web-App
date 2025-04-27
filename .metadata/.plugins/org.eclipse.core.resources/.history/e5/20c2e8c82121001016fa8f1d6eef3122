@@ -1,0 +1,126 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.tap.modeal.Restaurant" %>
+<%@ page import="java.util.*" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clone</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .navbar {
+            background-color: #fc8019;
+        }
+        .navbar-brand, .nav-link {
+            color: red;
+        }
+        .hero {
+            padding: 60px 20px;
+            background: url('https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/homepage_image') no-repeat center;
+            background-size: cover;
+            color: white;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 3rem;
+        }
+        .footer {
+            background-color: #2e2e2e;
+            color: white;
+            padding: 20px 0;
+            margin-top: 40px;
+            text-align: center;
+        }
+        .card img {
+            height: 200px;
+            object-fit: cover;
+        }
+        .submit-button {
+            background-color: #fc8019;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .submit-button:hover {
+            background-color: #e57012;
+        }
+        .col-md-4 mb-4{
+        }
+        
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="d-flex justify-content-between align-items-center px-4 py-3 shadow bg-white">
+    <div class="h4 text-warning font-weight-bold">Tap Food</div>
+    <nav>
+        <ul class="nav">
+            <li class="nav-item"><a class="nav-link text-dark" href="#">Home</a></li>
+            <li class="nav-item"><a class="nav-link text-dark" href="#">Search</a></li>
+            <li class="nav-item"><a class="nav-link text-dark" href="Login.html">Login</a></li>
+            <li class="nav-item"><a class="nav-link text-dark" href="Sigin.html">Sign in</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Restaurant Cards -->
+<div class="container mt-4">
+    <div class="row">
+        <%
+            Object obj = request.getAttribute("restaurant");
+            if (obj != null) {
+                List<Restaurant> restaur = (List<Restaurant>) obj;
+                for (Restaurant res : restaur) {
+        %>
+        <div class="col-md-4 mb-4">
+            
+               <a href="Menu?restaurantId=<%=res.getRestaurantId()%>">
+               
+               	 <input type="hidden" name="restaurantId" value="<%= res.getRestaurantId() %>">
+                   <div class="card">
+                   
+                         <h3><%= res.getName() %></h3>
+                    <img src="<%= res.getImagepath()%>" class="card-img-top" alt="<%= res.getName() %>">
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold"><%= res.getName() %></h5>
+                        <div class="d-flex justify-content-between mb-2">
+                            <div><i class="bi bi-star-fill text-warning"></i> <%= res.getRating() %></div>
+                            <div><i class="bi bi-clock"></i> <%= res.getEta() %></div>
+                        </div>
+                        <p class="mb-1"><%= res.getCuisineType() %></p>
+                        <p class="text-muted"><%= res.getAddress() %></p>
+                        <div class="text-center">
+                            <input type="submit" value="View Menu" class="submit-button">
+                        </div>
+                    </div>
+                </div>
+               
+               </a>
+            
+        </div>
+        <%
+                }
+            }
+        %>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <p>&copy; 2025 </p>
+</footer>
+
+
+</body>
+</html>

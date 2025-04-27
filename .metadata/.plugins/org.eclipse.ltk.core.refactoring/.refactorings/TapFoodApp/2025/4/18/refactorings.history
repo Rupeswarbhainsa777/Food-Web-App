@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;TapFoodApp/src/main/webapp/cart.jsp&apos; to &apos;cartPage.jsp&apos;" description="Rename resource &apos;cart.jsp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/webapp/cart.jsp" name="cartPage.jsp" stamp="1745756496802" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;TapFoodApp/src/main/webapp/cartPage.jsp&apos; to &apos;cart.jsp&apos;" description="Rename resource &apos;cartPage.jsp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/webapp/cartPage.jsp" name="cart.jsp" stamp="1745756674527" updateReferences="true"/>
+</session>
