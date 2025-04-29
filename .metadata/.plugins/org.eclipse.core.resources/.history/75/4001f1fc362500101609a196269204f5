@@ -1,0 +1,56 @@
+package com.tap.DaoImple;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import com.tap.modeal.Dish;
+
+public class DishDAOImp {
+	
+	
+	private Connection con = null;
+	PreparedStatement ps = null;
+	 ResultSet rs = null;
+	private final String url = "jdbc:mysql://localhost/foodapp";
+	private final String username = "root";
+	private final String password = "@sumit222";
+	private final String sql = "SELECT * FROM `dish` WHERE `is_special` = 1";
+	
+	public DishDAOImp()
+	{
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url, username, password);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+    public Dish getSpecialDish() 
+    {
+        Dish dish = null;
+
+      
+           ps = con.prepareStatement(sql);
+           rs = ps.executeQuery();
+
+            if (rs.next()) {
+                dish = new Dish();
+                dish.setId(rs.getInt("id"));
+                dish.setName(rs.getString("name"));
+                dish.setDescription(rs.getString("description"));
+                dish.setImagePath(rs.getString("image_path"));
+                dish.setSpecial(rs.getBoolean("is_special"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return dish;
+    }
+}

@@ -1,61 +1,179 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.tap.modeal.Orders" %>
+<%@ page import="com.tap.modeal.Cart" %>
 <%@ page import="java.text.DecimalFormat" %>
+<%@ page import="com.tap.modeal.CartItem" %>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Confirmation - Tap Foods</title>
-
+    <title>Thank You for Your Order</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Arial', sans-serif; background: #f8f9fa; color: #333; line-height: 1.6; }
-        .container { max-width: 800px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); }
-        header { background-color: #2A2F4F; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
-        header h1 { font-size: 28px; }
-        .content { padding: 20px; }
-        .details { margin-bottom: 20px; }
-        .details p { margin: 10px 0; font-size: 18px; }
-        .button-container { display: flex; justify-content: center; gap: 20px; margin-top: 30px; }
-        .btn { padding: 10px 20px; border: none; border-radius: 5px; background: #082032; color: white; cursor: pointer; font-size: 18px; transition: 0.3s; }
-        .btn:hover { background: #334756; }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        
+        header {
+            background-color: #2A2F4F;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        
+        .content {
+            padding: 20px;
+        }
+
+    	.confirmation-message {
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 20px;
+        }    
+	        
+        .order-summary {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .order-summary th, .order-summary td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        .order-summary th {
+            background-color: #082032;
+            color: #fff;
+            font-weight: 700;
+            text-align: left;
+        }
+
+        .order-summary tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .order-summary tbody tr:nth-child(odd) {
+            background-color: #fff;
+        }
+
+        /* Total price section styles */
+        .total-price {
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        .total-price p {
+            font-size: 24px;
+            font-weight: 700;
+            padding: 10px;
+        }
+
+        /* Button styles */
+        
+        .button-container {
+    		display: flex;
+  			justify-content: space-between;
+  			float:hidden;
+		}
+        
+        .confirm-btn, .Cancel-btn  {
+            background-color:  #082032;;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        .confirm-btn:hover,  .Cancel-btn:hover  {
+            background-color: #334756;
+        }
+       
+       
     </style>
 </head>
-
 <body>
+    <header>
+        <h1>Thank You for Your Order</h1>
+    </header>
+    <div class="container">
+        <div class="content">
+            <div class="confirmation-message">
+                <p>Your order has been successfully placed!</p>
+            </div>
+            <div class="cart-summary">
+                <h2>Order Summary</h2>
+                <table class="order-summary">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% 
+                            Cart cart = (Cart) session.getAttribute("cart");
+                            if (cart != null) {
+                                double totalPrice = (double) session.getAttribute("totalPrice");
+                                DecimalFormat df = new DecimalFormat("#.##");
 
-<header>
-    <h1>Thank You for Your Order!</h1>
-</header>
-
-<div class="container">
-    <div class="content">
-        <div class="details">
-            <% 
-                Orders order = (Orders) session.getAttribute("order"); 
-                if (order != null) {
-                    DecimalFormat df = new DecimalFormat("#.##");
-            %>
-            <p><strong>Order ID:</strong> <%= order.getOrderId() %></p>
-            <p><strong>Payment Method:</strong> <%= order.getPaymentMode() %></p>
-            <p><strong>Status:</strong> <%= order.getStatus() %></p>
-            <p><strong>Order Date:</strong> <%= order.getOrderDate() %></p>
-            <p><strong>Total Amount:</strong> ₹<%= df.format(order.getTotalAmount()) %></p>
-            <% 
-                } else { 
-            %>
-            <p style="color:red;">Order details not available. Please try again.</p>
-            <% } %>
-        </div>
-
-        <div class="button-container">
-            <button class="btn" onclick="window.location.href='ResturentMain.jsp'">Back to Home</button>
-            <button class="btn" onclick="window.location.href='OrdersList.jsp'">View My Orders</button>
+                                for (CartItem item : cart.getItems().values()) {
+                                    double itemTotal = item.getPrice() * item.getQuantity();
+                        %>
+                        <tr>
+                            <td><%= item.getName()%></td>
+                            <td>&#x20B9;<%= item.getPrice() %></td>
+                            <td><%= item.getQuantity() %></td>
+                            <td>&#x20B9;<%= df.format(itemTotal) %></td>
+                        </tr>
+                        <% 
+                                
+                            }
+                        %>
+                    </tbody>
+                </table>
+                <div class="total-price">
+                    <% if (session.getAttribute("totalPrice") != null) { %>
+                        <p>Total Price: &#x20B9;<%= df.format(totalPrice) %></p>
+                    <% }
+                    }%>
+                </div>
+            </div>
+            <div class="button-container">
+           	 	<button class="confirm-btn" onclick="window.location.href='confirmation2.jsp'">Confirm</button>
+            	<button class="Cancel-btn" onclick="window.location.href='RestaurantMain.jsp'">Cancel</button>
+            </div>
         </div>
     </div>
-</div>
-
 </body>
 </html>

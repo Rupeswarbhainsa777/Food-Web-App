@@ -40,7 +40,8 @@ public class LoginServlet extends HttpServlet {
 
         boolean isValid = userImp.isValidUser(email, password);
 
-        if (isValid) {
+        if (isValid) 
+        {
           
         	
         	session.setAttribute("email", email);
@@ -49,7 +50,7 @@ public class LoginServlet extends HttpServlet {
 
         
         } else {
-            response.sendRedirect("Login.html?error=invalidCredentials");
+            response.sendRedirect("AlltypeLogin.jsp");
         }
     }
 }

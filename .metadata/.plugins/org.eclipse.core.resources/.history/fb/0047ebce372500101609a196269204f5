@@ -1,0 +1,44 @@
+<%@ page import="com.tap.modeal.Dish"%>
+<%@ page import="com.tap.Dao.Dishdao"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%
+    Dishdao dishDAO = new Dishdao();
+    Dish specialDish = dishDAO.getSpecialDish();
+%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Resto | Home</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <nav>
+        <div class="logo">🍴Resto.</div>
+        <ul class="nav-links">
+            <li><a href="home.jsp">Home</a></li>
+            <li><a href="dishes.jsp">Dishes</a></li>
+            <li><a href="about.jsp">About</a></li>
+            <li><a href="order.jsp">Order</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="hero-text">
+        <p class="special">Our Special Dish</p>
+        <h1><%= specialDish != null ? specialDish.getName() : "Not Available" %></h1>
+        <p><%= specialDish != null ? specialDish.getDescription() : "No description available." %></p>
+        <form action="order.jsp" method="get">
+            <input type="hidden" name="dish" value="<%= specialDish != null ? specialDish.getName() : "" %>">
+            <button type="submit">Order Now</button>
+        </form>
+    </div>
+    <div class="hero-image">
+        <img src="<%= specialDish != null ? specialDish.getImagePath() : "images/placeholder.jpg" %>" alt="Special Dish">
+    </div>
+</section>
+
+</body>
+</html>

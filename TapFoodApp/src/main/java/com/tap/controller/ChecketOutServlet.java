@@ -38,37 +38,48 @@ public class ChecketOutServlet extends HttpServlet
 
         HttpSession session = req.getSession();
         Cart cart = (Cart) session.getAttribute("cart");
-        User user = (User) session.getAttribute("loggedInUser");  // Correct attribute name
+        User user = (User) session.getAttribute("User");  // Correct attribute name
 
-        if (cart != null && !cart.getItems().isEmpty()) {
+        if (cart != null ) 
+        {
 
             double totalPrice = 0;
             for (CartItem item : cart.getItems().values()) {
                 totalPrice += item.getPrice() * item.getQuantity();
+                
+                
             }
-            
-            String paymentMethod = req.getParameter("paymentMethod");
-
-            Orders order = new Orders();
-            order.setRestaurantId((int) session.getAttribute("restaurantId"));
-            order.setUserId(user.getUserId());
-            order.setPaymentMode(paymentMethod);
-            order.setStatus("Pending");
-            order.setOrderDate(new Timestamp(new Date().getTime()));
-            order.setTotalAmount(totalPrice);
-
-            // Save order to DB
-            int orderId = orderImp.addOrder(order);
-            order.setOrderId(orderId);
-
-            // Clear cart
-            session.removeAttribute("cart");
-            session.setAttribute("order", order);
-
-            resp.sendRedirect("confirm.jsp");
-
-        } else {
-            resp.sendRedirect("cart.jsp"); // cart empty or user not logged in
+            session.setAttribute("totalPrice", totalPrice);
         }
+        else
+        {
+        	String paymentMethod = req.getParameter("paymentMethod");
+        
+
+			
+
+			 Orders order = new Orders();
+	            order.setRestaurantId((int) session.getAttribute("restaurantId"));
+	            order.setUserId(user.getUserId());
+	            order.setPaymentMode(paymentMethod);
+	            order.setStatus("Pending");
+	            order.setOrderDate(new Timestamp(new Date().getTime()));
+	       
+
+
+	            orderImp.addOrder(order);
+
+			session.removeAttribute("cart");
+			session.setAttribute("order", order);
+        	
+        	
+        }
+        resp.sendRedirect("confirm.jsp");
+
+           
+            
+          
+
+       
     }
 }
