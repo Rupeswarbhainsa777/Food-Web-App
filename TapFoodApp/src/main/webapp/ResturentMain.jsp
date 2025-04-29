@@ -1,7 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page import="com.tap.modeal.Restaurant"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.tap.modeal.User" %>
 
+  <% User user = (User) session.getAttribute("user");
+  boolean isLoggedIn = (user == null);
+    %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,7 +51,6 @@ body {
 	text-align: center;
 }
 
-
 .card img {
 	height: 200px;
 	object-fit: cover;
@@ -66,8 +69,6 @@ body {
 .submit-button:hover {
 	background-color: #e57012;
 }
-
-
 </style>
 </head>
 <body>
@@ -81,7 +82,7 @@ body {
 				<li class="nav-item"><a class="nav-link text-dark" href="#">Home</a></li>
 				<li class="nav-item"><a class="nav-link text-dark" href="#">Search</a></li>
 				<li class="nav-item"><a class="nav-link text-dark"
-					href="Login.html">Login</a></li>
+					href="AlltypeLogin.jsp">Login</a></li>
 				<li class="nav-item"><a class="nav-link text-dark"
 					href="Sigin.html">Sign in</a></li>
 			</ul>
@@ -99,13 +100,15 @@ body {
 			%>
 			<div class="col-md-4 mb-4">
 
-                 
+
 
 				<input type="hidden" name="restaurantId"
 					value="<%=res.getRestaurantId()%>">
+
+
 				<div class="card">
 
-					
+
 					<img src="<%=res.getImagepath()%>" class="card-img-top"
 						alt="<%=res.getName()%>">
 					<div class="card-body">
@@ -123,9 +126,6 @@ body {
 						<div class="text-center">
 							<a href="Menu?restaurantId=<%=res.getRestaurantId()%>"><input
 								type="submit" value="View Menu" class="submit-button"> </a>
-        
-
-
 
 						</div>
 					</div>

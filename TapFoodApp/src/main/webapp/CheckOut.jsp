@@ -1,136 +1,108 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.tap.modeal.Cart" %>
-<%@ page import="com.tap.modeal.CartItem" %>
-<%@ page import="java.util.*" %>
-
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="UTF-8">
-<title>Checkout - Tap Food</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-<style>
-body {
-    background-color: #f8f9fa;
-}
-.checkout-container {
-    max-width: 600px;
-    margin: 40px auto;
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-}
-h2 {
-    margin-bottom: 20px;
-}
-.payment-methods {
-    margin-top: 20px;
-}
-.payment-methods label {
-    display: block;
-    margin-bottom: 10px;
-    font-size: 18px;
-}
-.place-order-btn {
-    margin-top: 30px;
-}
-.footer {
-    background-color: #2e2e2e;
-    color: white;
-    padding: 20px 0;
-    margin-top: 40px;
-    text-align: center;
-}
-</style>
-
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Check-out</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        .form-group input[type="text"],
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input[type="text"]:focus,
+        .form-group select:focus {
+            border-color: #007bff;
+        }
+        
+        .form-group select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background: url('arrow.png') no-repeat center right;
+            background-size: 12px;
+            padding-right: 30px;
+            cursor: pointer;
+        }
+        .btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
 
-<!-- Header -->
-<header class="d-flex justify-content-between align-items-center px-4 py-3 shadow bg-white">
-    <div class="h4 text-warning font-weight-bold">Tap Food</div>
-    <nav>
-        <ul class="nav">
-            <li class="nav-item"><a class="nav-link text-dark" href="home.jsp">Home</a></li>
-            <li class="nav-item"><a class="nav-link text-dark" href="cart.jsp">Cart</a></li>
-            <li class="nav-item"><a class="nav-link text-dark" href="LogoutServlet">Logout</a></li>
-        </ul>
-    </nav>
-</header>
+<div class="container">
+    <h2>Checkout</h2>
+		<form action="ChecketOutServlet" method="post">
+			<div class="form-group">
+				<label for="plot">Plot/Flat No:</label> <input type="text" id="plot"
+					name="plot" placeholder="Enter plot/flat number">
+			</div>
+			<div class="form-group">
+				<label for="street">Street Name:</label> <input type="text"
+					id="street" name="street" placeholder="Enter street name">
+			</div>
+			<div class="form-group">
+				<label for="pincode">Pincode:</label> <input type="text"
+					id="pincode" name="pincode" placeholder="Enter pincode">
+			</div>
+			<div class="form-group">
+				<label for="city">City:</label> <input type="text" id="city"
+					name="city" placeholder="Enter city" required>
+			</div>
 
-<!-- Checkout Form -->
-<div class="checkout-container">
-    <h2 class="text-center">Checkout</h2>
-    
-    <form action="OrderServlet" method="post">
-        
-        <!-- Total Amount -->
-        <%
-        Cart cart = (Cart) session.getAttribute("cart");
-        double totalAmount = 0.0;
-        if (cart != null && !cart.getItems().isEmpty()) {
-            for (CartItem item : cart.getItems().values()) {
-                totalAmount += item.getPrice() * item.getQuantity();
-            }
-        %>
-        <div class="form-group">
-            <label>Total Amount:</label>
-            <input type="text" class="form-control" value="₹<%= String.format("%.2f", totalAmount) %>" readonly>
-            <input type="hidden" name="totalAmount" value="<%= totalAmount %>">
-        </div>
-        <% } else { %>
-        <div class="alert alert-warning text-center">
-            Your cart is empty! <a href="home.jsp" class="alert-link">Shop now</a>
-        </div>
-        <% } %>
-
-        <!-- Payment Methods -->
-        <div class="payment-methods">
-            <label>Select Payment Method:</label>
-            
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="paymentMethod" id="online" value="Online" required>
-                <label class="form-check-label" for="online">
-                    Online Payment
-                </label>
-            </div>
-
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="paymentMethod" id="cash" value="Cash">
-                <label class="form-check-label" for="cash">
-                    Cash on Delivery
-                </label>
-            </div>
-
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="paymentMethod" id="upi" value="UPI">
-                <label class="form-check-label" for="upi">
-                    UPI Payment
-                </label>
-            </div>
-
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="paymentMethod" id="card" value="Card">
-                <label class="form-check-label" for="card">
-                    Debit/Credit Card
-                </label>
-            </div>
-        </div>
-
-        <!-- Place Order Button -->
-        <div class="text-center place-order-btn">
-            <button type="submit" class="btn btn-success btn-lg">Place Order</button>
-        </div>
-
-    </form>
-</div>
-
-<!-- Footer -->
-<footer class="footer">
-    <p>&copy; 2025 Tap Food. All rights reserved.</p>
-</footer>
+			<div class="form-group">
+				<label for="payment">Mode of Payment:</label> <select id="payment"
+					name="payment">
+					<option value="COD">Cash on Delivery</option>
+					<option value="credit">Credit Card</option>
+					<option value="debit">Debit Card</option>
+					<option value="upi">UPI</option>
+				</select>
+			</div>
+			<button type="submit" class="btn" style="width: 100%;">Confirm</button>
+		</form>
+	</div>
 
 </body>
 </html>
+

@@ -102,7 +102,7 @@
 
 <!-- Footer -->
 <footer class="footer">
-    <p>&copy; 2024 Taste-Tribe</p>
+    <p>&copy; 2025</p>
 </footer>
 
 </body>

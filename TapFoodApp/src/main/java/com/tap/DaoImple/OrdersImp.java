@@ -39,30 +39,31 @@ public class OrdersImp implements OrderDao {
 		
 	}
 
-	@Override
-	public int addOrder(Orders ot) {
-		int generatedOrderId = -1;
-		try {
-			pstmt = con.prepareStatement(ADD_ORDER, Statement.RETURN_GENERATED_KEYS);
-			pstmt.setInt(1, ot.getUserId());
-			pstmt.setInt(2, ot.getRestaurantId());
-			pstmt.setDouble(3, ot.getTotalAmount());
-			pstmt.setString(4, ot.getStatus());
-			pstmt.setString(5, ot.getPaymentMode());
+	 @Override
+	 public int addOrder(Orders ot) {
+	     int generatedOrderId = 0;
+	     try {
+	         pstmt = con.prepareStatement(ADD_ORDER, Statement.RETURN_GENERATED_KEYS);
+	         pstmt.setInt(1, ot.getUserId());
+	         pstmt.setInt(2, ot.getRestaurantId());
+	         pstmt.setDouble(3, ot.getTotalAmount());
+	         pstmt.setString(4, ot.getStatus());
+	         pstmt.setString(5, ot.getPaymentMode());
 
-			int status = pstmt.executeUpdate();
-			if (status > 0) {
-				try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
-					if (generatedKeys.next()) {
-						generatedOrderId = generatedKeys.getInt(1);
-					}
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return generatedOrderId;
-	}
+	         int status = pstmt.executeUpdate(); // EXECUTE the INSERT
+
+	         if (status > 0) {
+	             ResultSet res = pstmt.getGeneratedKeys();
+	             if (res.next()) {
+	                 generatedOrderId = res.getInt(1);
+	             }
+	         }
+
+	     } catch (SQLException e) {
+	         e.printStackTrace();
+	     }
+	     return generatedOrderId;
+	 }
 
 	@Override
 	public ArrayList<Orders> getAllOrders(int userId) {
@@ -106,7 +107,7 @@ public class OrdersImp implements OrderDao {
 					resultSet.getInt("orderId"),
 					resultSet.getInt("userId"),
 					resultSet.getInt("restaurantId"),
-					resultSet.getDate("orderDate"),
+					resultSet.getTimestamp("orderDate"),
 					resultSet.getDouble("totalAmount"),
 					resultSet.getString("status"),
 					resultSet.getString("modeOfPayment")

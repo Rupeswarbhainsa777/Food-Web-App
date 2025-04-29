@@ -1,0 +1,47 @@
+package com.tap.controller;
+
+import com.tap.DaoImple.UserImp;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
+
+import java.io.IOException;
+
+@WebServlet("/Login")
+public class LoginServlet extends HttpServlet {
+
+    private UserImp userImp;
+
+    @Override
+    public void init() throws ServletException {
+        userImp = new UserImp();
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+
+        if (email == null || password == null || email.isEmpty() || password.isEmpty()) {
+            response.sendRedirect("Login.html?error=emptyFields");
+            return;
+        }
+
+        boolean isValid = userImp.isValidUser(email, password);
+
+        if (isValid) {
+            HttpSession session = request.getSession();
+            session.setAttribute("email", email);
+
+            // Optional: Get user role or details from DB if needed
+            // String role = userImp.getUserRoleByEmail(email);
+            // session.setAttribute("role", role);
+
+            response.sendRedirect("resturent.jsp"); // redirect to user dashboard/home
+        } else {
+            response.sendRedirect("Login.html?error=invalidCredentials");
+        }
+    }
+}

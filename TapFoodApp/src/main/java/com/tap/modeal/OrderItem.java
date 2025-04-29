@@ -4,24 +4,23 @@ public class OrderItem {
 	private int orderItemId;
 	private int userId;
 	private int menuId;
-	private String name;
-	private String quantity;
-	private double  rating;
+
+	private int quantity;
+
 	private double price;
 	
 	public OrderItem() {
 		
 	}
 
-	public OrderItem(int orderItemId, int userId, int menuId, String name, String quantity, double rating,
+	public OrderItem(int userId, int menuId, int quantity,
 			double price) {
 		super();
-		this.orderItemId = orderItemId;
+		
 		this.userId = userId;
 		this.menuId = menuId;
-		this.name = name;
+		
 		this.quantity = quantity;
-		this.rating = rating;
 		this.price = price;
 	}
 
@@ -49,28 +48,14 @@ public class OrderItem {
 		this.menuId = menuId;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getQuantity() {
+	
+	
+	public int getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(String quantity) {
+	public void setQuantity(int quantity) {
 		this.quantity = quantity;
-	}
-
-	public double getRating() {
-		return rating;
-	}
-
-	public void setRating(double rating) {
-		this.rating = rating;
 	}
 
 	public double getPrice() {
@@ -80,6 +65,9 @@ public class OrderItem {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	
+
+	
 	
 	
 }

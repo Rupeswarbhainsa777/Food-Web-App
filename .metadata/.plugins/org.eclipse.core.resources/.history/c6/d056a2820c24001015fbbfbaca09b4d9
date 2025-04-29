@@ -1,0 +1,68 @@
+package com.tap.controller;
+
+import com.tap.DaoImple.OrdersImp;
+import com.tap.modeal.Cart;
+import com.tap.modeal.CartItem;
+import com.tap.modeal.OrderItem;
+import com.tap.modeal.User;
+import com.tap.modeal.Orders;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+import java.io.IOException;
+
+@WebServlet("/CheckoutServlet")
+public class ChecketOutServlet extends HttpServlet {
+
+    private OrdersImp orderDaoImpl;
+
+    public void init() {
+        orderDaoImpl = new OrdersImp();
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        HttpSession session = req.getSession();
+        Cart cart = (Cart) session.getAttribute("cart");
+        User user = (User) session.getAttribute("user");
+        String paymentMethod = req.getParameter("payment");
+
+        if (cart == null || cart.getItems().isEmpty()) {
+            resp.sendRedirect("Cart.jsp"); // If cart is empty, redirect back to cart
+            return;
+        }
+
+        double totalPrice = 0;
+        for (CartItem item : cart.getItems().values()) {
+            totalPrice += item.getPrice() * item.getQuantity();
+        }
+
+        // Create new Order
+        Orders order = new Orders();
+        order.setRestaurantId((int) session.getAttribute("restaurantId"));
+        order.setUserId(user.getUserId());
+        order.setPaymentMode(paymentMethod);
+        order.setStatus("pending"); // Default status
+        order.setTotalAmount(totalPrice); // <-- Set total price
+
+        // Save order to database
+        int generatedOrderId = orderDaoImpl.addOrder(order);
+
+        // Clear the cart
+        session.removeAttribute("cart");
+
+        // Pass order info to Confirmation.jsp
+        req.setAttribute("orderId", generatedOrderId);
+        req.setAttribute("paymentMethod", paymentMethod);
+        req.setAttribute("totalPrice", totalPrice);
+
+        req.getRequestDispatcher("confirm.jsp").forward(req, resp);
+    }
+}
+

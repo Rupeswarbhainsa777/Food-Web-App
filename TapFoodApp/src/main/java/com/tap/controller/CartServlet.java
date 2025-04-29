@@ -20,6 +20,7 @@ public class CartServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         Cart cart = (Cart) session.getAttribute("cart");
+       
 
         int newRestaurantId = Integer.parseInt(request.getParameter("restaurantId"));
         Integer currentRestaurantId = (Integer) session.getAttribute("restaurantId");
@@ -31,7 +32,9 @@ public class CartServlet extends HttpServlet {
         }
 
         String action = request.getParameter("action");
-
+        
+        if (action != null)
+        {
         if (action.equals("add")) {
             addItemToCart(request, cart);
         } else if (action.equals("update")) {
@@ -39,7 +42,7 @@ public class CartServlet extends HttpServlet {
         } else if (action.equals("remove")) {
           removeItemFromCart(request, cart);
         }
-        
+        }
         session.setAttribute("cart", cart);
         response.sendRedirect("cart.jsp");
         
@@ -50,7 +53,13 @@ public class CartServlet extends HttpServlet {
 
     private void addItemToCart(HttpServletRequest request, Cart cart) {
         int itemId = Integer.parseInt(request.getParameter("itemId"));
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
+//        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        String quantityStr = request.getParameter("quantity");
+        int quantity = 1; // default quantity
+        if (quantityStr != null && !quantityStr.isEmpty()) {
+            quantity = Integer.parseInt(quantityStr);
+        }
+
 
         MenuImp menud = new MenuImp();
         Menu menuItem = menud.getMenu(itemId);
@@ -71,7 +80,14 @@ public class CartServlet extends HttpServlet {
     private void upadateCartItem(HttpServletRequest request, Cart cart)
     {
     	   int itemId = Integer.parseInt(request.getParameter("itemId"));
-           int quantity = Integer.parseInt(request.getParameter("quantity"));
+//           int quantity = Integer.parseInt(request.getParameter("quantity"));
+    	   
+    	   String quantityStr = request.getParameter("quantity");
+    	   int quantity = 1; // default quantity
+    	   if (quantityStr != null && !quantityStr.isEmpty()) {
+    	       quantity = Integer.parseInt(quantityStr);
+    	   }
+
 
     	       cart.updateItem(itemId, quantity);
     }

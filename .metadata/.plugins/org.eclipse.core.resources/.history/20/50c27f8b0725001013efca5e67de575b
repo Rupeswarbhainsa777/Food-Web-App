@@ -1,0 +1,75 @@
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import com.tap.DaoImple.RestaurantImp;
+import com.tap.modeal.Restaurant;
+
+
+
+
+@WebServlet("/Resturent2sevelt")
+public class Resturent2sevelt extends HttpServlet {
+
+    private RestaurantImp restaurantImp;
+    private UserImp userImp;
+
+    @Override
+    public void init() throws ServletException {
+        restaurantImp = new RestaurantImp();
+        userImp = new UserImp();
+    }
+
+    @Override
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ArrayList<Restaurant> restaurantList = restaurantImp.getAllRestaurant();
+
+        HttpSession session = req.getSession();
+        session.setAttribute("restaurant", restaurantList);
+
+        // Retrieve the email from the session
+        String email = (String) session.getAttribute("email");
+
+        if (email != null) {
+            // Fetch the user object based on the email
+            User user = userImp.getUserByEmail(email);
+            if (user != null) {
+                session.setAttribute("user", user);
+            }
+        }
+
+        RequestDispatcher rd = req.getRequestDispatcher("resturent.jsp");
+        rd.forward(req, resp);
+    }
+}
+
+///**
+// * Servlet implementation class Resturent2sevelt
+// */
+//@WebServlet("/Resturent2sevelt")
+//public class Resturent2sevelt extends HttpServlet {
+//
+//	@Override
+//	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//		RestaurantImp rest = new RestaurantImp();
+//		ArrayList<Restaurant> restaurant = rest.getAllRestaurant();
+//
+//		HttpSession sess = req.getSession();
+//		sess.setAttribute("restaurant", restaurant);
+//
+//
+//		RequestDispatcher rd = req.getRequestDispatcher("resturent.jsp");
+//
+//		rd.forward(req, resp);
+//
+//	}
+//
+//}

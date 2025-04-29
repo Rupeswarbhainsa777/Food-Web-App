@@ -17,15 +17,17 @@ public class UserImp implements UserDao {
 	private String url = "jdbc:mysql://localhost/foodapp";
 	private String username = "root";
 	private String password = "@sumit222";
-	
-	
-	String insertQuery = "INSERT INTO `user` ( `name`,`email`,`phoneno`,`address`,`password`,`role`) VALUES (?, ?, ?, ?, ?, ?)";
 
+	String insertQuery = "INSERT INTO `user` ( `name`,`email`,`phoneno`,`address`,`password`,`role`) VALUES (?, ?, ?, ?, ?, ?)";
 
 	String retreiveQuery = "SELECT * FROM `user` WHERE `email` = ?";
 	String updateQuery = "UPDATE `user` SET `email` = ?,`address` = ?,`username` = ? , `password` = ? , `role` = ? WHERE `userId` = ?";
 	String deleteQuery = "DELETE FROM `user` WHERE `userId` = ?";
 	String selectQuery = "Select * FROM `user`";
+	String bymail = "SELECT * FROM `user` WHERE `email` = ?";
+
+	final static String SELECTBYUSERANDPASS = "SELECT * from `user` WHERE `email` = ? AND `password` = ?";
+	final static String USERNAMEVALID = "SELECT COUNT(*) FROM `user` WHERE `username` = ?";
 
 	PreparedStatement pstm = null;
 	Statement stm = null;
@@ -112,7 +114,7 @@ public class UserImp implements UserDao {
 
 	private User extractUserFromResultSet(ResultSet res) throws Exception {
 		User user = new User();
-		user.setUserName(res.getString("user_name"));
+		user.setUserName(res.getString("username"));
 		user.setPassword(res.getString("password"));
 		user.setEmail(res.getString("email"));
 		user.setAddress(res.getString("address"));
@@ -126,8 +128,7 @@ public class UserImp implements UserDao {
 		try {
 			stm = con.createStatement();
 			res = stm.executeQuery(selectQuery);
-			while (res.next()) 
-			{
+			while (res.next()) {
 				User u = extractUserFromResultSet(res);
 				list.add(u);
 			}
@@ -136,6 +137,74 @@ public class UserImp implements UserDao {
 		}
 
 		return null;
+	}
+
+	public boolean isUserExists(String userName) {
+
+		boolean exists = false;
+		try {
+			pstm = con.prepareStatement(USERNAMEVALID);
+			pstm.setString(1, userName);
+
+			res = pstm.executeQuery();
+
+			if (res.next()) {
+				int c = res.getInt(1);
+				exists = c > 0;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return exists;
+	}
+      
+	@Override
+	public boolean isValidUser(String Email, String password) {
+         res=null;
+		boolean isValid = false;
+		try {
+			pstm = con.prepareStatement(SELECTBYUSERANDPASS);
+
+			pstm.setString(1, Email);
+
+			pstm.setString(2, password);
+
+			res = pstm.executeQuery();
+
+			if (res.next()) {
+				isValid = true;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return isValid;
+	}
+
+	public User getUserByEmail(String email) {
+		User user = null;
+
+		try {
+
+			pstm = con.prepareStatement(bymail);
+
+			pstm.setString(1, email);
+			ResultSet rs = pstm.executeQuery();
+
+			if (rs.next()) {
+				user = new User();
+				user.setUserId(rs.getInt("id"));
+				user.setName(rs.getString("name"));
+				user.setEmail(rs.getString("email"));
+				user.setPassword(rs.getString("password"));
+				// Set other fields as needed
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return user;
 	}
 
 }

@@ -1,0 +1,67 @@
+package com.tapfoods.controller;
+
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Date;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.tap.DaoImpl.OrderDaoImpl;
+import com.tap.modeal.Cart;
+import com.tap.modeal.CartItem;
+import com.tap.modeal.Order;
+import com.tap.modeal.User;
+
+@WebServlet("/ChecketOutServlet")
+public class ChecketOutServlet extends HttpServlet {
+
+    private OrdersImp orderDaoImp;
+
+    public void init() {
+        orderDaoImpl = new OrdersImp();
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        HttpSession session = req.getSession();
+        Cart cart = (Cart) session.getAttribute("cart");
+        User user = (User) session.getAttribute("loggedInUser");  // Correct attribute name
+
+        if (cart != null && user != null && !cart.getItems().isEmpty()) {
+
+            double totalPrice = 0;
+            for (CartItem item : cart.getItems().values()) {
+                totalPrice += item.getPrice() * item.getQuantity();
+            }
+
+            String paymentMethod = req.getParameter("paymentMethod");
+
+            Order order = new Order();
+            order.setRestaurantId((int) session.getAttribute("restaurantId"));
+            order.setUserId(user.getUserId());
+            order.setModeOfPayment(paymentMethod);
+            order.setStatus("Pending");
+            order.setOrderDate(new Timestamp(new Date().getTime()));
+            order.setTotalAmount(totalPrice);
+
+            // Save order to DB
+            int orderId = orderDaoImpl.addOrder(order);
+            order.setOrderId(orderId);
+
+            // Clear cart
+            session.removeAttribute("cart");
+            session.setAttribute("order", order);
+
+            resp.sendRedirect("confirm.jsp");
+
+        } else {
+            resp.sendRedirect("cart.jsp"); // cart empty or user not logged in
+        }
+    }
+}

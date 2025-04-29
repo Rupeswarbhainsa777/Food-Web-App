@@ -1,0 +1,37 @@
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import com.tap.DaoImple.RestaurantImp;
+import com.tap.modeal.Restaurant;
+
+/**
+ * Servlet implementation class Resturent2sevelt
+ */
+@WebServlet("/Resturent2sevelt")
+public class Resturent2sevelt extends HttpServlet {
+
+	@Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		RestaurantImp rest = new RestaurantImp();
+		ArrayList<Restaurant> restaurant = rest.getAllRestaurant();
+
+		HttpSession sess = req.getSession();
+		sess.setAttribute("restaurantList", all);
+
+//		req.setAttribute("restaurantList", all);
+		RequestDispatcher rd = req.getRequestDispatcher("resturent.jsp");
+
+		rd.forward(req, resp);
+
+	}
+
+}

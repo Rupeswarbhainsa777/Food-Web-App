@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Swiggy Sign In</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #fff;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .left {
+            flex: 1;
+            background-color: #fc8019;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .right {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-box {
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .form-box h2 {
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #fc8019;
+            border: none;
+            color: white;
+            padding: 12px 0;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #e06d0c;
+        }
+
+        .link {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .link a {
+            color: #fc8019;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .link a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="left">
+        Swiggy
+    </div>
+    <div class="right">
+        <div class="form-box">
+            <h2>Sign In</h2>
+            <form action="LoginServlet" method="post">
+                <input type="text" name="email" placeholder="Enter Email or Mobile" required />
+                <input type="password" name="password" placeholder="Enter Password" required />
+                <input type="submit" value="Login" />
+            </form>
+            <div class="link">
+                <p>Don't have an account? <a href="signup.jsp">Sign up</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

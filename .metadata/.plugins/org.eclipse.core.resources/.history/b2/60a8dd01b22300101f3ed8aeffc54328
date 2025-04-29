@@ -1,0 +1,156 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
+<%@ page import="java.util.*" %>
+<%@ page import="com.tap.utils.DBConnection" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Order Summary - Tap Food</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<style>
+body {
+    background-color: #f8f9fa;
+}
+.summary-container {
+    max-width: 800px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.table th {
+    background-color: #ff6f00;
+    color: white;
+}
+.total-price {
+    text-align: right;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+.button-group {
+    margin-top: 30px;
+    text-align: center;
+}
+.button-group a {
+    margin: 0 10px;
+}
+.footer {
+    background-color: #2e2e2e;
+    color: white;
+    padding: 20px 0;
+    margin-top: 40px;
+    text-align: center;
+}
+</style>
+
+</head>
+<body>
+
+<header class="d-flex justify-content-between align-items-center px-4 py-3 shadow bg-white">
+    <div class="h4 text-warning font-weight-bold">Tap Food</div>
+    <nav>
+        <ul class="nav">
+            <li class="nav-item"><a class="nav-link text-dark" href="home.jsp">Home</a></li>
+            <li class="nav-item"><a class="nav-link text-dark" href="LogoutServlet">Logout</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="summary-container">
+    <h2>Thank You for Your Order</h2>
+
+    <p class="text-center text-success">Your order has been successfully placed!</p>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Price (₹)</th>
+                <th>Quantity</th>
+                <th>Total (₹)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <%
+            Connection conn = null;
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            double grandTotal = 0.0;
+
+            try {
+                // Assuming you have a DBConnection.java that gives connection
+                conn = DBConnection.getConnection();
+
+                // Get latest order ID for this user (assuming you saved user_id in session)
+                int userId = (Integer) session.getAttribute("userId");
+                
+                String getOrderQuery = "SELECT id FROM orders WHERE user_id=? ORDER BY id DESC LIMIT 1";
+                ps = conn.prepareStatement(getOrderQuery);
+                ps.setInt(1, userId);
+                rs = ps.executeQuery();
+
+                int orderId = 0;
+                if (rs.next()) {
+                    orderId = rs.getInt("id");
+                }
+
+                if (orderId > 0) {
+                    // Now fetch order items
+                    String fetchItemsQuery = "SELECT oi.item_name, oi.price, oi.quantity FROM order_items oi WHERE oi.order_id=?";
+                    ps = conn.prepareStatement(fetchItemsQuery);
+                    ps.setInt(1, orderId);
+                    rs = ps.executeQuery();
+
+                    while (rs.next()) {
+                        String itemName = rs.getString("item_name");
+                        double price = rs.getDouble("price");
+                        int quantity = rs.getInt("quantity");
+                        double total = price * quantity;
+                        grandTotal += total;
+            %>
+            <tr>
+                <td><%= itemName %></td>
+                <td><%= String.format("%.2f", price) %></td>
+                <td><%= quantity %></td>
+                <td><%= String.format("%.2f", total) %></td>
+            </tr>
+            <%
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            }
+            %>
+        </tbody>
+    </table>
+
+    <div class="total-price">
+        Total Price: ₹<%= String.format("%.2f", grandTotal) %>
+    </div>
+
+    <div class="button-group">
+        <a href="home.jsp" class="btn btn-success">Order More</a>
+        <a href="LogoutServlet" class="btn btn-danger">Logout</a>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2025 Tap Food. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
+

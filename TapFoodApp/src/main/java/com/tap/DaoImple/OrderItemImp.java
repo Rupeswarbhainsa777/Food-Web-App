@@ -19,10 +19,10 @@ public class OrderItemImp implements OrderItemDao {
 	private final String username = "root";
 	private final String password = "@sumit222";
 
-	private static final String insert = "insert into `orderItem`(`userId`,`menueId`,`quantity`,`rating`,`price`,`name`) values(?,?,?,?,?,?)";
+	private static final String insert = "insert into `orderItem`(`userId`,`menueId`,`quantity`,`price`,) values(?,?,?,?)";
 	private static final String select = "select * from `orderItem` where orderItemId=?";
 	private static final String selectAll = "select * from `orderItem`";
-	private static final String update = "UPDATE `orderItem` SET `userId`=?, `menueId`=?, `name`=?, `quantity`=?, `rating`=?, `price`=? WHERE `orderItemId`=?";
+	private static final String update = "UPDATE `orderItem` SET `userId`=?, `menueId`=?,  `quantity`=?, `price`=? WHERE `orderItemId`=?";
 
 
 	private static final String delete = "DELETE FROM `orderItem` WHERE `orderItemId`=?";
@@ -49,10 +49,9 @@ public class OrderItemImp implements OrderItemDao {
 			pstmt.setInt(1, orderItem.getOrderItemId());
 			pstmt.setInt(2, orderItem.getUserId());
 			pstmt.setInt(3, orderItem.getMenuId());
-			pstmt.setString(4, orderItem.getName());
-			pstmt.setString(5, orderItem.getQuantity());
-			pstmt.setDouble(6, orderItem.getRating());
-			pstmt.setDouble(7, orderItem.getPrice());
+			pstmt.setInt(4, orderItem.getQuantity());
+			
+			pstmt.setDouble(5, orderItem.getPrice());
 			pstmt.executeUpdate();
 
 		} catch (Exception e) {
@@ -79,12 +78,11 @@ public class OrderItemImp implements OrderItemDao {
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 return new OrderItem(
-                    rs.getInt("orderItemId"),
+               
                     rs.getInt("userId"),
                     rs.getInt("menueId"),
-                    rs.getString("name"),
-                    rs.getString("quantity"),
-                    rs.getDouble("rating"),
+               
+                    rs.getInt("quantity"),
                     rs.getDouble("price")
                 );
             }
@@ -104,11 +102,11 @@ public class OrderItemImp implements OrderItemDao {
         try (PreparedStatement pstmt = con.prepareStatement(update)) {
             pstmt.setInt(1, item.getUserId());
             pstmt.setInt(2, item.getMenuId());
-            pstmt.setString(3, item.getName());
-            pstmt.setString(4, item.getQuantity());
-            pstmt.setDouble(5, item.getRating());
-            pstmt.setDouble(6, item.getPrice());
-            pstmt.setInt(7, item.getOrderItemId());
+           
+            pstmt.setInt(3, item.getQuantity());
+        
+            pstmt.setDouble(4, item.getPrice());
+            pstmt.setInt(5, item.getOrderItemId());
 
             pstmt.executeUpdate();
         } catch (Exception e) {
@@ -140,12 +138,12 @@ public class OrderItemImp implements OrderItemDao {
 
             while (rs.next()) {
                 OrderItem item = new OrderItem(
-                    rs.getInt("order_item_id"),
+                 
                     rs.getInt("user_id"),
                     rs.getInt("menu_id"),
-                    rs.getString("name"),
-                    rs.getString("quantity"),
-                    rs.getDouble("rating"),
+                   
+                    rs.getInt("quantity"),
+               
                     rs.getDouble("price")
                 );
                 list.add(item);

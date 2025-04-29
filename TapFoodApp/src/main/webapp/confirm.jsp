@@ -1,0 +1,61 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.tap.modeal.Orders" %>
+<%@ page import="java.text.DecimalFormat" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - Tap Foods</title>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Arial', sans-serif; background: #f8f9fa; color: #333; line-height: 1.6; }
+        .container { max-width: 800px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); }
+        header { background-color: #2A2F4F; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+        header h1 { font-size: 28px; }
+        .content { padding: 20px; }
+        .details { margin-bottom: 20px; }
+        .details p { margin: 10px 0; font-size: 18px; }
+        .button-container { display: flex; justify-content: center; gap: 20px; margin-top: 30px; }
+        .btn { padding: 10px 20px; border: none; border-radius: 5px; background: #082032; color: white; cursor: pointer; font-size: 18px; transition: 0.3s; }
+        .btn:hover { background: #334756; }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Thank You for Your Order!</h1>
+</header>
+
+<div class="container">
+    <div class="content">
+        <div class="details">
+            <% 
+                Orders order = (Orders) session.getAttribute("order"); 
+                if (order != null) {
+                    DecimalFormat df = new DecimalFormat("#.##");
+            %>
+            <p><strong>Order ID:</strong> <%= order.getOrderId() %></p>
+            <p><strong>Payment Method:</strong> <%= order.getPaymentMode() %></p>
+            <p><strong>Status:</strong> <%= order.getStatus() %></p>
+            <p><strong>Order Date:</strong> <%= order.getOrderDate() %></p>
+            <p><strong>Total Amount:</strong> ₹<%= df.format(order.getTotalAmount()) %></p>
+            <% 
+                } else { 
+            %>
+            <p style="color:red;">Order details not available. Please try again.</p>
+            <% } %>
+        </div>
+
+        <div class="button-container">
+            <button class="btn" onclick="window.location.href='ResturentMain.jsp'">Back to Home</button>
+            <button class="btn" onclick="window.location.href='OrdersList.jsp'">View My Orders</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
