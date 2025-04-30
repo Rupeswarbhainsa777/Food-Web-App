@@ -19,7 +19,6 @@
     <fullyQualifiedTypeName name="org.apache.jasper.tagplugins.jstl.core.Out"/>
     <fullyQualifiedTypeName name="com.tap.DaoImple.MenuImp"/>
     <fullyQualifiedTypeName name="java.util.List"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="jakarta.servlet.RequestDispatcher"/>
     <fullyQualifiedTypeName name="java.lang.Integer"/>
     <fullyQualifiedTypeName name="com.tap.modeal.Cart"/>
@@ -39,5 +38,7 @@
     <fullyQualifiedTypeName name="com.tap.DaoImple.UserImp"/>
     <fullyQualifiedTypeName name="com.tap.modeal.User"/>
     <fullyQualifiedTypeName name="jakarta.servlet.http.HttpSession"/>
+    <fullyQualifiedTypeName name="com.tap.Dao.Dishdao"/>
     <fullyQualifiedTypeName name="java.lang.Override"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
 </qualifiedTypeNameHistroy>

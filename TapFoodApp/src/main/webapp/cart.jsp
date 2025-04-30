@@ -1,196 +1,246 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.tap.modeal.Cart" %>
-<%@ page import="com.tap.modeal.CartItem" %>
-<%@ page import="java.util.*" %>
+<%@ page import="com.tap.modeal.Cart, com.tap.modeal.CartItem, java.util.*, java.text.DecimalFormat" %>
+<%
+    Cart cart = (Cart) session.getAttribute("cart");
+    DecimalFormat df = new DecimalFormat("₹#.00");
+    double subtotal = 0.0;
+%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Cart</title>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
 
-<style>
-	body {
-		font-family: Arial, sans-serif;
-	}
-	.cart-item {
-		border: 2px solid #ccc;
-		border-radius: 5px;
-		padding: 10px;
-		width: 710px;
-		margin: 0 auto;
-		max-width: 800px;
-		margin-top: 10px;
-		padding-top: 20px;
-		padding-bottom: 20px;
-	}
-	header {
-		background-color: #2A2F4F;
-		padding: 20px 0;
-		text-align: center;
-		color: #fff;
-	}
-	header h1 {
-		font-size: 24px;
-		margin: 0;
-	}
-	.top-image-container {
-		text-align: center;
-	}
-	.top-image {
-		max-width: 100%;
-		height: auto;
-	}
-	.empty-cart-msg {
-		font-size: 24px;
-		font-weight: bold;
-		color: #555;
-		margin-top: 20px;
-	}
-	.menu-items {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 20px;
-		justify-content: center;
-	}
-	.menu-item {
-		border: 1px solid #ccc;
-		border-radius: 5px;
-		padding: 10px;
-		width: calc(50% - 22px);
-		box-sizing: border-box;
-		margin-bottom: 20px;
-	}
-	.item-details {
-		margin-bottom: 10px;
-	}
-	.item-details p {
-		margin: 0;
-		font-weight: bold;
-	}
-	.price {
-		color: #888;
-	}
-	.quantity-controls {
-		display: flex;
-		align-items: center;
-	}
-	.quantity-controls input[type="submit"], 
-	.quantity-controls input[type="number"] {
-		margin-right: 10px;
-	}
-	.remove-btn, 
-	.update-btn {
-		background-color: #f44336;
-		color: white;
-		border: none;
-		padding: 5px 10px;
-		border-radius: 5px;
-		cursor: pointer;
-	}
-	.remove-btn:hover, .update-btn:hover {
-		background-color: #d32f2f;
-	}
-	.add-more-item-btn, .proceed-to-checkout-btn {
-		background-color: #4CAF50;
-		color: white;
-		border: none;
-		padding: 10px 20px;
-		text-align: center;
-		text-decoration: none;
-		display: inline-block;
-		font-size: 16px;
-		border-radius: 5px;
-		cursor: pointer;
-		margin-right: 10px;
-	}
-	.add-more-item-btn:hover, .proceed-to-checkout-btn:hover {
-		background-color: #45a049;
-	}
-	.proceed-buttons-container {
-		display: flex;
-		justify-content: space-between;
-		margin-top: 20px;
-	}
-	.add-more-button, .checkout-button {
-		flex: 1;
-		text-align: center;
-	}
-	.total-price {
-		text-align: center;
-		font-size: 22px;
-		font-weight: bold;
-		margin-top: 20px;
-		color: #333;
-	}
-</style>
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
 
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 16px;
+            border-bottom: 1px solid #eaeaea;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: 600;
+        }
+
+        .remove-link {
+            color: #f44336;
+            font-size: 12px;
+            margin-top: 4px;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .summary {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .coupon, .cart-summary {
+            flex: 1;
+            background: #fafafa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .coupon input[type="text"] {
+            width: 70%;
+            padding: 8px;
+            margin-right: 10px;
+        }
+
+        .coupon button {
+            padding: 8px 16px;
+        }
+
+        .cart-summary label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .checkout {
+            width: 100%;
+            padding: 12px;
+            background: black;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .add-more-btn {
+            display: inline-block;
+            padding: 10px 18px;
+            background: #444;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        .qty-btn {
+            width: 32px;
+            height: 32px;
+            font-size: 18px;
+            font-weight: bold;
+            border: 1px solid #ccc;
+            background: #fff;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+
+        .quantity-input {
+            width: 45px;
+            text-align: center;
+            margin: 0 6px;
+            background: #f2f2f2;
+            border: none;
+            pointer-events: none;
+        }
+
+        .empty-cart {
+            text-align: center;
+            font-size: 24px;
+            color: #777;
+        }
+    </style>
 </head>
 <body>
 
-<header>
+<div class="container">
     <h1>Cart</h1>
-</header>
 
-<div class="cart-item">
-    <div class="menu-items">
-        <!-- Cart Items -->
-        <% 
-        Cart cart = (Cart) session.getAttribute("cart");
-        double totalPrice = 0.0;
-        if (cart != null && !cart.getItems().isEmpty()) {
-            for (CartItem item : cart.getItems().values()) {
-                totalPrice += item.getPrice() * item.getQuantity();
-        %>
-        <div class="menu-item" id="<%=item.getItemId()%>">
-            <div class="item-details">
-                <p><%=item.getName()%></p>
-                <span class="price">Price: ₹<%=item.getPrice()%></span><br/>
-                <span class="price">Subtotal: ₹<%=item.getPrice() * item.getQuantity()%></span>
-                <form action="Cart" method="post">
-                    <input type="hidden" name="itemId" value="<%=item.getItemId()%>">
-                    <div class="quantity-controls">
-                    
-                        <input type="submit" name="action" value="remove" class="remove-btn">
-                        <input type="number" name="quantity" value="<%=item.getQuantity()%>" min="1">
-                        <input type="submit" name="action" value="update" class="update-btn">
-                    </div>
-                </form>
-            </div>
-        </div>
-        <% 
-            }
-        %>
-        
-        <!-- Total Price Section -->
-        <div class="total-price">
-            Grand Total: ₹<%= String.format("%.2f", totalPrice) %>
-        </div>
-        
-        <% 
-        } else { 
-        %>
-        <div class="top-image-container">
-            <img src="https://via.placeholder.com/400x200?text=Empty+Cart" alt="Empty Cart" class="top-image">
-            <p class="empty-cart-msg">Your Cart Is Empty</p>
-        </div>
-        <% 
-        } 
-        %>
-    </div>
-    
-    <div class="proceed-buttons-container">
-        <div class="add-more-button">
-            <a href="Menu?restaurantId=<%=session.getAttribute("restaurantId")%>" class="btn add-more-item-btn">Add More</a>
-        </div>
-        <div class="checkout-button">
-            <% if (cart != null && !cart.getItems().isEmpty()) { %>
-            <a href="CheckOut.jsp" class="btn proceed-to-checkout-btn">Proceed to Checkout</a>
+    <% if (cart != null && !cart.getItems().isEmpty()) { %>
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (CartItem item : cart.getItems().values()) {
+                   double itemTotal = item.getPrice() * item.getQuantity();
+                   subtotal += itemTotal;
+            %>
+            <tr>
+                <td>
+                    <strong><%= item.getName() %></strong><br/>
+                    <a href="Cart?action=remove&itemId=<%= item.getItemId() %>" class="remove-link">Remove</a>
+                </td>
+                <td>
+                    <form action="Cart" method="post" style="display: flex; align-items: center;">
+                        <button type="button" class="qty-btn" onclick="updateQty(this, -1)">−</button>
+                        <input type="number" name="quantity" value="<%= item.getQuantity() %>" min="1" class="quantity-input" readonly>
+                        <button type="button" class="qty-btn" onclick="updateQty(this, 1)">+</button>
+                        <input type="hidden" name="itemId" value="<%= item.getItemId() %>">
+                        <input type="submit" name="action" value="update" style="display: none;">
+                    </form>
+                </td>
+                <td><%= df.format(item.getPrice()) %></td>
+                <td><%= df.format(itemTotal) %></td>
+            </tr>
             <% } %>
+        </tbody>
+    </table>
+
+    <div class="summary">
+        <div class="coupon">
+            <h3>Have a coupon?</h3>
+            <input type="text" placeholder="Enter code">
+            <button>Apply</button>
+        </div>
+
+        <div class="cart-summary">
+            <h3>Cart Summary</h3>
+            <label><input type="radio" name="shipping" checked> Free Shipping - ₹0.00</label>
+            <label><input type="radio" name="shipping"> Express Shipping - ₹15.00</label>
+            <p>Subtotal: <strong><%= df.format(subtotal) %></strong></p>
+            <p>Total: <strong><%= df.format(subtotal) %></strong></p>
+
+            <a href="Menu?restaurantId=<%= session.getAttribute("restaurantId") %>" class="add-more-btn">Add More Items</a>
+
+            <form action="CheckOut.jsp">
+                <button type="submit" class="checkout">Checkout</button>
+            </form>
         </div>
     </div>
 
+    <% } else { %>
+        <div class="empty-cart">Your Cart is Empty</div>
+    <% } %>
 </div>
+
+<script>
+    function updateQty(button, delta) {
+        const input = button.parentElement.querySelector('input[type="number"]');
+        let value = parseInt(input.value);
+        if (isNaN(value)) value = 1;
+        value += delta;
+        if (value < 1) value = 1;
+        input.value = value;
+        button.closest("form").submit();
+    }
+</script>
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

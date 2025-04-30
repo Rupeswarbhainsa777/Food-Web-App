@@ -38,6 +38,7 @@ body {
 	background-size: cover;
 	color: white;
 	text-align: center;
+	height: 100vh;
 }
 .hero-text {
 	color: green;
@@ -70,7 +71,7 @@ body {
 	text-align: center;
 }
 .submit-button {
-	background-color: #fc8019;
+	background-color: #3D90D7;
 	border: none;
 	color: white;
 	padding: 10px 20px;
