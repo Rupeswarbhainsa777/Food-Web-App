@@ -8,6 +8,7 @@ public class Dish {
     private String description;
     private String imagePath;
     private boolean isSpecial;
+ 
     
     
     
@@ -19,9 +20,9 @@ public class Dish {
 	}
     
     
-	public Dish(int id, String name, String description, String imagePath, boolean isSpecial) {
+	public Dish(String name, String description, String imagePath, boolean isSpecial) {
 		super();
-		this.id = id;
+	
 		this.name = name;
 		this.description = description;
 		this.imagePath = imagePath;

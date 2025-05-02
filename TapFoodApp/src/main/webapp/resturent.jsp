@@ -30,19 +30,17 @@ body {
 	color: white;
 }
 .hero {
-	display: flex;
-	align-items: center;
-	justify-content: space-around;
-	padding: 3rem;
-	background: url('https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/homepage_image') no-repeat center;
-	background-size: cover;
-	color: white;
-	text-align: center;
-	height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    padding: 50px;
+    background-color: #f9f9f9;
+    transition: all 0.5s ease-in-out;
 }
-.hero-text {
-	color: green;
-	max-width: 500px;
+..hero-text, .hero-image {
+    flex: 1;
+    transition: transform 0.5s ease, opacity 0.5s ease;
 }
 .hero-text .special {
 	font-weight: bold;
@@ -104,12 +102,32 @@ body {
 	border-top-right-radius: 12px;
 }
 
+<style>
+
+
+
+
+.swap-left {
+    transform: translateX(-100px);
+    opacity: 0;
+}
+
+.swap-right {
+    transform: translateX(100px);
+    opacity: 0;
+}
+
+
+  
 </style>
+
+
+
 </head>
 <body>
 
 	<header class="d-flex justify-content-between align-items-center px-4 py-3 shadow bg-white">
-		<div class="h4 text-warning font-weight-bold">Tap Food</div>
+		<div class="h4 text-warning font-weight-bold" >CodeFood</div>
 		<nav>
 			<ul class="nav">
 				<li class="nav-item"><a class="nav-link text-dark" href="#">Home</a></li>
@@ -118,24 +136,9 @@ body {
 		</nav>
 	</header>
 
-	<section class="hero">
-	    <div class="hero-text">
-	        <p class="special">Our Special Dish</p>
-	        <h1><%= specialDish != null ? specialDish.getName() : "Not Available" %></h1>
-	        <p><%= specialDish != null ? specialDish.getDescription() : "No description available." %></p>
-	        <form action="order.jsp" method="get">
-	            <input type="hidden" name="dish" value="<%= specialDish != null ? specialDish.getName() : "" %>">
-	            <button class="but" type="submit"  style="background:red">Order Now</button>
-	        </form>
-	    </div>
-	    <div class="hero-image">
-	        <% if (specialDish != null && specialDish.getImagePath() != null) { %>
-	            <img src="<%= specialDish.getImagePath() %>" alt="Special Dish">
-	        <% } else { %>
-	            <img src="images/placeholder.jpg" alt="No Dish Available">
-	        <% } %>
-	    </div>
-	</section>
+	
+
+	
 
 	<!-- Restaurant Cards -->
 	<div class="container mt-4">
@@ -185,5 +188,12 @@ body {
 	<footer class="footer">
 		<p>&copy; 2025 Tap Food. All rights reserved.</p>
 	</footer>
+	
+	
+	
+	
+	<!-- java script -->
+	
+	
 </body>
 </html>

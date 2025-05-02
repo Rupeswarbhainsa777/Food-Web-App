@@ -76,7 +76,7 @@ header {
 <body>
 <header>
     <nav>
-        <div class="logo">🍴Resto.</div>
+        <div class="logo">🍴CodeFood</div>
         <ul class="nav-links">
             <li><a href="home.jsp">Home</a></li>
             <li><a href="dishes.jsp">Dishes</a></li>

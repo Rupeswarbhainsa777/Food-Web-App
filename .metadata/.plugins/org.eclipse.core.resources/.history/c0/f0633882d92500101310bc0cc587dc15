@@ -1,0 +1,74 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="java.util.*" %>
+<%@ page import="com.tap.modeal.Menu" %>  <!-- Assuming MenuItem is the correct model -->
+<html>
+<head>
+    <title>Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 30px;
+            padding: 40px;
+        }
+
+        .grid-item {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .grid-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .grid-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .grid-item .item-name {
+            font-weight: bold;
+            margin-top: 5px;
+            font-size: 16px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <%
+            List<Menu> menuList = (List<MenuItem>) request.getAttribute("menuList");
+            if (menuList != null && !menuList.isEmpty()) {
+                for (Menu item : menuList) {
+        %>
+            <div class="grid-item">
+                <img src="<%= item.getImagePath() %>" alt="<%= item.getName() %>">
+                <div class="item-name"><%= item.getName() %></div>
+            </div>
+        <%
+                }
+            } else {
+        %>
+            <p style="text-align:center; grid-column: 1 / -1;">No menu items available.</p>
+        <%
+            }
+        %>
+    </div>
+</body>
+</html>
+
+

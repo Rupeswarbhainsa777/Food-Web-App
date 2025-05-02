@@ -20,6 +20,8 @@ public class DishDAOImp implements Dishdao {
 	private final String password = "@sumit222";
 	private final String sql = "SELECT * FROM `dish` WHERE `is_special` = 1";
 	private final String selectAll = "SELECT * FROM `dish`";
+    String insertQuery = "INSERT INTO `dish` (`name`, `description`, `imagepath`, `is_special`) VALUES (?, ?, ?, ?)";
+
 
 	PreparedStatement ps = null;
 	ResultSet rs = null;
@@ -39,43 +41,41 @@ public class DishDAOImp implements Dishdao {
 
 	@Override
 	public List<Dish> getAllDishes() {
-		List<Dish> list = new ArrayList<>();
+	    List<Dish> list = new ArrayList<>();
+	
 
-		try
-		{
-			
-			    con.createStatement();
-			while (rs.next()) {
-				list.add(mapAllDish(rs));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return list;
+	    try (Statement stmt = con.createStatement();
+	         ResultSet rs = stmt.executeQuery(selectAll)) {
+
+	        while (rs.next()) {
+	            Dish dish = mapAllDish(rs);
+	            if (dish != null) {
+	                list.add(dish);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return list;
 	}
+
 
 	private Dish mapAllDish(ResultSet re) {
+	    try {
+	       
+	        String name = re.getString("name");
+	        String des = re.getString("description");
+	        String imagePath = re.getString("imagepath");
+	        boolean special = re.getBoolean("is_special");
 
-		int id = 1;
-		String name = null;
-		String imagePath = null;
-		String des = null;
-		boolean spacial = false;
-		try {
-			id = re.getInt("id");
-
-			name = re.getString("name");
-			des = re.getString("description");
-			imagePath = re.getString("imagepath");
-			spacial = re.getBoolean("is_spacial");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return new Dish(id, name, des, imagePath, spacial);
-
+	        return new Dish(name, des, imagePath, special);
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return null; // Optional: return null to indicate failure
+	    }
 	}
+
 
 	@Override
 	public Dish getSpecialDish() {
@@ -95,9 +95,26 @@ public class DishDAOImp implements Dishdao {
 			}
 
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 		}
 
 		return dish;
 	}
+	public boolean addDish(Dish dish) {
+
+	    try (
+	    PreparedStatement ps = con.prepareStatement(insertQuery)) {
+	        ps.setString(1, dish.getName());
+	        ps.setString(2, dish.getDescription());
+	        ps.setString(3, dish.getImagePath());
+	        ps.setBoolean(4, dish.isSpecial());
+
+	        int rows = ps.executeUpdate();
+	        return rows > 0;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+
 }
