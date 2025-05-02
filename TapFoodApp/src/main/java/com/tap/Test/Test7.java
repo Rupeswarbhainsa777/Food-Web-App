@@ -9,7 +9,7 @@ public class Test7 {
     public static void main(String[] args) {
         DishDAOImp dao = new DishDAOImp();
 
-        Dish dish = new Dish("Veg Biryani", "Delicious spiced rice with vegetables", "images/veg_biryani.jpg", true);
+        Dish dish = new Dish("Veg", "Delicious spiced rice with vegetables", "images/veg_biryani.jpg");
 
         boolean result = dao.addDish(dish);
 

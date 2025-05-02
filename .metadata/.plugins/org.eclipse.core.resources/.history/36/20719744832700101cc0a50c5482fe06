@@ -1,0 +1,148 @@
+<%@ page import="java.util.List" %>
+<%@ page import="com.tap.modeal.Dish" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%
+    List<Dish> dishes = (List<Dish>) session.getAttribute("dishlist");
+%>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Most Popular Menu</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: #fffaf0;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .section-title {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+        .categories {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .categories button {
+            border: none;
+            background: #fff;
+            padding: 8px 16px;
+            margin: 5px;
+            border-radius: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+        .categories button:hover {
+            background: #ffe4b5;
+        }
+        .menu-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 0 20px;
+        }
+        .menu-card {
+            width: 180px;
+            background: white;
+            border-radius: 20px;
+            text-align: center;
+            padding: 20px 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+        .menu-card:hover {
+            transform: translateY(-5px);
+        }
+        .menu-card img {
+            height: 100px;
+            width: 100px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+        .dish-name {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .dish-weight {
+            font-size: 13px;
+            color: gray;
+        }
+        .dish-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffa500;
+            margin: 10px 0;
+        }
+        .quantity-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            align-items: center;
+        }
+        .quantity-controls button {
+            border: none;
+            background: #ffa500;
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="section-title">
+        <p class="text-warning font-weight-bold mb-1">OUR MENU</p>
+        <h2>The Most Popular</h2>
+    </div>
+
+    <div class="categories">
+        <button>Burgers</button>
+        <button>Pizza</button>
+        <button>Sushi</button>
+        <button>Snacks</button>
+        <button>Salads</button>
+        <button>Drinks</button>
+        <button>Desserts</button>
+    </div>
+
+    <div class="menu-grid">
+        <%
+            if (dishes != null) {
+                for (Dish dish : dishes) {
+        %>
+            <div class="menu-card">
+                <img src="<%= dish.getImagePath() %>" alt="<%= dish.getName() %>">
+                <div class="dish-name"><%= dish.getName() %></div>
+                <div class="dish-weight"><%= dish.getWeight() %> g</div>
+                <div class="dish-price">$<%= dish.getPrice() %></div>
+                <div class="quantity-controls">
+                    <button>-</button>
+                    <span>1</span>
+                    <button>+</button>
+                </div>
+            </div>
+        <%
+                }
+            } else {
+        %>
+            <p class="text-center">No dishes available.</p>
+        <%
+            }
+        %>
+    </div>
+
+</body>
+</html>
+
+

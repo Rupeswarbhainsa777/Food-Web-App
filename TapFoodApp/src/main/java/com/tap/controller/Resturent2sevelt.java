@@ -13,10 +13,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tap.DaoImple.DishDAOImp;
 import com.tap.DaoImple.RestaurantImp;
-import com.tap.DaoImple.UserImp;
+import com.tap.modeal.Dish;
+//import com.tap.DaoImple.UserImp;
 import com.tap.modeal.Restaurant;
-import com.tap.modeal.User;
+
 
 /**
  * Servlet implementation class Resturent2sevelt
@@ -28,13 +30,17 @@ public class Resturent2sevelt extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	    RestaurantImp rest = new RestaurantImp();
 	    ArrayList<Restaurant> restaurant = rest.getAllRestaurant();
-//	    UserImp user = new UserImp();
-//	    List<User> user1 = user.getAll();
-//        
+	    DishDAOImp disDao = new DishDAOImp();
+
+		List<Dish> dishlist = disDao.getAllDishes();
+      
 		HttpSession sess = req.getSession();
 		sess.setAttribute("restaurant", restaurant);
-//		HttpSession session = req.getSession();
-//		session.setAttribute("user1", user1);
+		sess.setAttribute("dishlist", dishlist);
+		
+		
+		
+		
 		
 		
 		 RequestDispatcher rd = req.getRequestDispatcher("resturent.jsp");

@@ -29,7 +29,7 @@
             text-align: center;
         }
         .order-btn {
-            background-color: #fc8019;
+            background-color: #000000;
             border: none;
             color: white;
             padding: 8px 16px;
@@ -44,7 +44,7 @@
 
 <!-- Header -->
 <header class="d-flex justify-content-between align-items-center px-4 py-3 shadow bg-white">
-    <div class="h4 text-warning font-weight-bold">Tap Food</div>
+    <div class="h4 text-black font-weight-bold">CodeFood</div>
     <nav>
         <ul class="nav">
             <li class="nav-item"><a class="nav-link text-dark" href="home.jsp">Home</a></li>

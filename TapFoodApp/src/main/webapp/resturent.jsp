@@ -5,6 +5,7 @@
 <%@ page import="com.tap.Dao.Dishdao"%>
 <%@ page import="com.tap.DaoImple.DishDAOImp"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ page import="com.tap.modeal.Dish" %>
 <%
 User user = (User) session.getAttribute("user1");
 List<Restaurant> restaurants = (List<Restaurant>) session.getAttribute("restaurant");
@@ -69,7 +70,7 @@ body {
 	text-align: center;
 }
 .submit-button {
-	background-color: #3D90D7;
+	background-color: #000000;
 	border: none;
 	color: white;
 	padding: 10px 20px;
@@ -102,7 +103,7 @@ body {
 	border-top-right-radius: 12px;
 }
 
-<style>
+
 
 
 
@@ -118,7 +119,48 @@ body {
 }
 
 
-  
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 30px;
+            padding: 40px;
+        }
+
+        .grid-item {
+          
+            padding: 20px;
+            border-radius: 12px;
+        
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .grid-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .grid-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .item-name {
+            font-weight: bold;
+            font-size: 16px;
+            color: #333;
+            margin-top: 8px;
+        }
+  .heading{
+   font-size: 2rem;
+      margin-top: 20px;
+  display: flex;
+      align-items: center;
+      justify-content: center;
+        
+  }
 </style>
 
 
@@ -127,17 +169,38 @@ body {
 <body>
 
 	<header class="d-flex justify-content-between align-items-center px-4 py-3 shadow bg-white">
-		<div class="h4 text-warning font-weight-bold" >CodeFood</div>
-		<nav>
-			<ul class="nav">
-				<li class="nav-item"><a class="nav-link text-dark" href="#">Home</a></li>
-				<li class="nav-item"><a class="nav-link text-dark" href="AlltypeLogin.jsp">Logout</a></li>
-			</ul>
-		</nav>
+		<div class="h4 text-black font-weight-bold" >CodeFood</div>
+			
+			
+
+	 <form class="d-flex" role="search">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+		
 	</header>
-
 	
-
+<h1 class="heading">What's on your mind?</h1>
+<div class="grid-container">
+        <%
+        List<Dish> obj = (List<Dish>) session.getAttribute("dishlist");
+        if (obj != null) {
+            List<Dish> menuList = obj;
+            for (Dish item : menuList)  {
+        %>
+            <div class="grid-item">
+                <img src="<%= item.getImagePath() %>" alt="<%= item.getName() %>">
+                <div class="item-name"><%= item.getName() %></div>
+            </div>
+        <%
+                }
+            } else {
+        %>
+            <p style="text-align:center; grid-column: 1 / -1;">No menu items available.</p>
+        <%
+            }
+        %>
+    </div>
 	
 
 	<!-- Restaurant Cards -->
@@ -186,8 +249,61 @@ body {
 	</div>
 
 	<footer class="footer">
-		<p>&copy; 2025 Tap Food. All rights reserved.</p>
-	</footer>
+		
+		
+		
+
+    <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+
+        <div style="flex: 1 1 180px; margin-bottom: 20px;">
+          
+            <p style="margin-top: 10px;">© 2025 FoodApp Limited</p>
+        </div>
+
+        <div style="flex: 1 1 180px; margin-bottom: 20px;">
+            <h6 style="font-weight: bold;">Company</h6>
+            <p>About Us</p>
+            <p>Corporate</p>
+            <p>Careers</p>
+            <p>Team</p>
+        </div>
+
+        <div style="flex: 1 1 180px; margin-bottom: 20px;">
+            <h6 style="font-weight: bold;">Contact Us</h6>
+            <p>Help & Support</p>
+            <p>Partner With Us</p>
+            <p>Ride With Us</p>
+        </div>
+
+        <div style="flex: 1 1 180px; margin-bottom: 20px;">
+            <h6 style="font-weight: bold;">Legal</h6>
+            <p>Terms & Conditions</p>
+            <p>Cookie Policy</p>
+            <p>Privacy Policy</p>
+        </div>
+
+        <div style="flex: 1 1 180px; margin-bottom: 20px;">
+            <h6 style="font-weight: bold;">Available In</h6>
+            <p>Bangalore</p>
+            <p>Hyderabad</p>
+            <p>Delhi</p>
+            <p>Mumbai</p>
+        </div>
+
+        <div style="flex: 1 1 180px; margin-bottom: 20px;">
+            <h6 style="font-weight: bold;">Follow Us</h6>
+            <div style="display: flex; gap: 10px;">
+                <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" width="24" alt="LinkedIn"></a>
+                <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/145/145802.png" width="24" alt="Instagram"></a>
+                <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/145/145805.png" width="24" alt="Facebook"></a>
+                <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/145/145812.png" width="24" alt="Twitter"></a>
+            </div>
+        </div>
+
+    </div>
+</footer>
+		
+
 	
 	
 	

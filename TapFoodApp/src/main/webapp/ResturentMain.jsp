@@ -5,6 +5,9 @@
 
   <% User user = (User) session.getAttribute("user");
   boolean isLoggedIn = (user == null);
+  
+  
+  
     %>
 <!DOCTYPE html>
 <html lang="en">

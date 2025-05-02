@@ -18,9 +18,9 @@ public class DishDAOImp implements Dishdao {
 	private final String url = "jdbc:mysql://localhost:3306/foodapp";
 	private final String username = "root";
 	private final String password = "@sumit222";
-	private final String sql = "SELECT * FROM `dish` WHERE `is_special` = 1";
+	private final String sql = "SELECT * FROM `dish` WHERE `id` = 1";
 	private final String selectAll = "SELECT * FROM `dish`";
-    String insertQuery = "INSERT INTO `dish` (`name`, `description`, `imagepath`, `is_special`) VALUES (?, ?, ?, ?)";
+    String insertQuery = "INSERT INTO `dish` (`name`, `description`, `imagepath`) VALUES (?, ?, ?)";
 
 
 	PreparedStatement ps = null;
@@ -67,9 +67,10 @@ public class DishDAOImp implements Dishdao {
 	        String name = re.getString("name");
 	        String des = re.getString("description");
 	        String imagePath = re.getString("imagepath");
-	        boolean special = re.getBoolean("is_special");
-
-	        return new Dish(name, des, imagePath, special);
+	      
+	        
+	        
+	        return new Dish(name, des, imagePath);
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	        return null; // Optional: return null to indicate failure
@@ -91,7 +92,7 @@ public class DishDAOImp implements Dishdao {
 				dish.setName(rs.getString("name"));
 				dish.setDescription(rs.getString("description"));
 				dish.setImagePath(rs.getString("imagepath"));
-				dish.setSpecial(rs.getBoolean("is_special")); // Will map TINYINT(1) to boolean
+			
 			}
 
 		} catch (Exception e) {
@@ -107,7 +108,7 @@ public class DishDAOImp implements Dishdao {
 	        ps.setString(1, dish.getName());
 	        ps.setString(2, dish.getDescription());
 	        ps.setString(3, dish.getImagePath());
-	        ps.setBoolean(4, dish.isSpecial());
+	      
 
 	        int rows = ps.executeUpdate();
 	        return rows > 0;
