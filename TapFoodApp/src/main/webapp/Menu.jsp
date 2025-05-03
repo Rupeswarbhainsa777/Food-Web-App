@@ -38,7 +38,34 @@
         .order-btn:hover {
             background-color: #e56d00;
         }
+        .qty-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .qty-btn {
+               background-color:  #f8f9fa;
+            border: none;
+              border-radius: 5px;
+            padding: 6px 12px;
+            font-size: 16px;
+        }
+        .quantity-input {
+            width: 50px;
+            text-align: center;
+            margin: 0 5px;
+        }
     </style>
+    <script>
+        function updateQty(button, delta) {
+            const input = button.parentElement.querySelector('.quantity-input');
+            let qty = parseInt(input.value);
+            qty = isNaN(qty) ? 1 : qty + delta;
+            if (qty < 1) qty = 1;
+            input.value = qty;
+        }
+    </script>
 </head>
 <body>
 
@@ -61,8 +88,7 @@
         <%
         List<Menu> obj = (List<Menu>) session.getAttribute("menuList");
         if (obj != null) {
-            List<Menu> menuList = obj;
-            for (Menu item : menuList) {
+            for (Menu item : obj) {
         %>
         <div class="col-md-4 mb-4">
             <div class="card">
@@ -71,14 +97,19 @@
                     <h5 class="card-title"><%= item.getItemName() %></h5>
                     <p class="card-text"><%= item.getDescription() %></p>
                     <p class="card-text font-weight-bold">₹<%= item.getItemPrice() %></p>
-                    
+
                     <!-- Add to Cart Form -->
                     <form action="Cart" method="post">
                         <input type="hidden" name="restaurantId" value="<%= item.getRestaurantId() %>">
                         <input type="hidden" name="itemId" value="<%= item.getMenuId() %>">
-                        <input type="hidden" name="quantity" value="1"> <!-- default quantity 1 -->
                         <input type="hidden" name="action" value="add">
-                        
+
+                        <div class="qty-group">
+                            <button type="button" class="qty-btn" onclick="updateQty(this, -1)">−</button>
+                            <input type="number" name="quantity" value="1" min="1" class="quantity-input" readonly>
+                            <button type="button" class="qty-btn" onclick="updateQty(this, 1)">+</button>
+                        </div>
+
                         <div class="text-center">
                             <input type="submit" class="order-btn" value="Add to Cart">
                         </div>

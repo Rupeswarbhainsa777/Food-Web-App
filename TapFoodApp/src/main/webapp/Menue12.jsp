@@ -1,184 +1,174 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
-<%@ page import="com.tap.modeal.Menu" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.tap.modeal.Dish" %>
+<%@ page import="com.tap.DaoImple.DishDAOImp" %>
 
 <%
-    List<Menu> obj = (List<Menu>) session.getAttribute("menuList");
+    DishDAOImp dishDAO = new DishDAOImp();
+    List<Dish> menuList = dishDAO.getAllDishes();
 %>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>The Most Popular Menu</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Swipeable Food Menu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
+    
     <style>
         body {
-            background: #fffaf0;
             font-family: 'Segoe UI', sans-serif;
+            background: #f3f3f3;
+            margin: 0;
+            padding: 0;
         }
 
-        .navbar {
-            background-color: #ffa500;
-        }
-
-        .navbar-brand, .nav-link, .form-control {
-            color: white !important;
-        }
-
-        .section-title {
-            text-align: center;
-            margin: 30px 0;
-        }
-
-        .categories {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .categories button {
-            border: none;
-            background: #fff;
-            padding: 8px 16px;
-            margin: 5px;
-            border-radius: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            cursor: pointer;
-        }
-
-        .categories button:hover {
-            background: #ffe4b5;
-        }
-
-        .menu-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-evenly;
-            padding: 0 20px;
-        }
-
-        .menu-card {
-            width: 25%;
-            background: white;
-            border-radius: 20px;
-            text-align: center;
-            padding: 15px 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-            height: 320px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .menu-card img {
-            height: 60%;
+        .swiper-container {
             width: 100%;
-            object-fit: cover;
-            border-radius: 12px;
-            margin-bottom: 10px;
+            height: 100vh;
         }
 
-        .dish-name {
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        .dish-price {
-            font-size: 18px;
-            font-weight: bold;
-            color: #ffa500;
-            margin: 10px 0;
-        }
-
-        .quantity-controls {
+        .swiper-slide {
             display: flex;
             justify-content: center;
-            gap: 10px;
             align-items: center;
         }
 
-        .quantity-controls button {
-            border: none;
-            background: #ffa500;
-            color: white;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            font-weight: bold;
-            cursor: pointer;
+        .card1 {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            padding: 30px;
+            width: 120vw;
+            max-width: 1020px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
         }
 
-        .add-to-cart-btn {
-            background-color: #28a745;
+        .text1 {
+            flex: 1;
+        }
+
+        .text1 h3 {
+            color: green;
+            font-size: 18px;
+            margin: 0;
+        }
+
+        .text1 h1 {
+            font-size: 36px;
+            margin: 10px 0;
+            color: #14213d;
+        }
+
+        .text1 p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .text1 button {
+            padding: 10px 25px;
+            background: #14213d;
             color: white;
             border: none;
-            padding: 6px 20px;
-            border-radius: 20px;
-            font-weight: bold;
-            margin-top: 10px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .text1 button:hover {
+            background: #1a1a2e;
+        }
+
+        .image1 img {
+            width: 250px;
+            height: auto;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        .swiper-pagination {
+            bottom: 15px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .card1 {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .image1 img {
+                width: 200px;
+            }
         }
     </style>
 </head>
 <body>
 
-<!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand" href="#">FoodApp</a>
-    <form class="form-inline my-2 my-lg-0 ml-auto">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    </form>
-    <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#"><span class="cart-icon">&#128722;<span class="cart-count">2</span></span></a></li>
-        <li class="nav-item"><a class="nav-link" href="logout.jsp">Logout</a></li>
-    </ul>
-</nav>
-
-<!-- Section Title -->
-<div class="section-title">
-    <p class="text-warning font-weight-bold mb-1">OUR MENU</p>
-    <h2>The Most Popular</h2>
-</div>
-
-<!-- Categories -->
-<div class="categories">
-    <button>Burgers</button>
-    <button>Pizza</button>
-    <button>Sushi</button>
-    <button>Snacks</button>
-    <button>Salads</button>
-    <button>Drinks</button>
-    <button>Desserts</button>
-</div>
-
-<!-- Menu Cards Grid -->
-<div class="menu-grid">
-    <%
-    if (obj != null) {
-        for (Menu dish : obj) {
-    %>
-    <div class="menu-card">
-        <img src="<%= dish.getImagePath() %>" alt="<%= dish.getItemName() %>">
-        <div class="dish-name"><%= dish.getItemName() %></div>
-        <div class="dish-price">$<%= dish.getItemPrice() %></div>
-        <div class="quantity-controls">
-            <button>-</button>
-            <span>1</span>
-            <button>+</button>
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <% 
+            if (menuList != null && !menuList.isEmpty()) {
+                for (Dish dish : menuList) {
+        %>
+        <div class="swiper-slide">
+            <div class="card1">
+                <div class="text1">
+                    <h3>Special Dish</h3>
+                    <h1><%= dish.getName() %></h1>
+                    <p><%= dish.getDescription() %></p>
+                    <button>Order Now</button>
+                </div>
+                <div class="image1">
+                    <img src="<%= dish.getImagePath() %>" alt="<%= dish.getName() %> Image">
+                </div>
+            </div>
         </div>
-        <button class="add-to-cart-btn">Add to Cart</button>
+        <%
+                }
+            } else {
+        %>
+        <div class="swiper-slide">
+            <div class="card1">
+                <h1>No dishes found.</h1>
+            </div>
+        </div>
+        <%
+            }
+        %>
     </div>
-    <%
-        }
-    } else {
-    %>
-    <div class="text-center w-100">
-        <p>No dishes available.</p>
-    </div>
-    <%
-    }
-    %>
+    <!-- Pagination Dots -->
+    <div class="swiper-pagination"></div>
 </div>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+<script>
+    const swiper = new Swiper('.swiper-container', {
+        loop: true,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        grabCursor: true,
+        autoplay: {
+            delay: 4000,
+            disableOnInteraction: false,
+        },
+        touchEventsTarget: 'container',
+        spaceBetween: 30,
+    });
+</script>
 
 </body>
 </html>
+

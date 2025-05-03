@@ -1,0 +1,91 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List"%>
+<%@ page import="com.tap.Dao.Dishdao"%>
+<%@ page import="com.tap.DaoImple.DishDAOImp"%>
+<%
+DishDAOImp dishDAO = new DishDAOImp();
+Dish specialDish = dishDAO.getSpecialDish(); 
+%>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Food Menu</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f3f3f3;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: #fff;
+        }
+        .content {
+            display: flex;
+            align-items: center;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            background: white;
+        }
+        .text {
+            max-width: 400px;
+            margin-right: 40px;
+        }
+        .text h3 {
+            color: green;
+        }
+        .text h1 {
+            font-size: 40px;
+            margin: 10px 0;
+            color: #14213d;
+        }
+        .text p {
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .text button {
+            padding: 10px 20px;
+            background: #14213d;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+        .image img {
+            width: 300px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+<%
+if (obj != null) {
+    List<Dish> menuList = obj;
+    for (Dish rs : menuList)
+    
+%>
+    <div class="content">
+        <div class="text">
+            <h3>Our Special Dish</h3>
+            <h1><%= rs.getString("name") %></h1>
+            <p><%= rs.getString("description") %></p>
+            <button>Order Now - ₹<%= rs.getDouble("price") %></button>
+        </div>
+        <div class="image">
+            <img src="<%= rs.getString("image_url") %>" alt="food image"/>
+        </div>
+    </div>
+<%
+}
+%>
+</div>
+
+</body>
+</html>

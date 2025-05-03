@@ -1,0 +1,113 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List" %>
+<%@ page import="com.tap.modeal.Dish" %>
+<%@ page import="com.tap.DaoImple.DishDAOImp" %>
+
+<%
+    DishDAOImp dishDAO = new DishDAOImp();
+    List<Dish> menuList = dishDAO.getAllDishes();
+%>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Food Menu</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f3f3f3;
+            margin: 0;
+            padding: 20px;
+        }
+        .slider-container {
+            overflow-x: auto;
+            white-space: nowrap;
+            padding-bottom: 20px;
+        }
+        .slider-track {
+            display: flex;
+            gap: 20px;
+        }
+        .card {
+            display: flex;
+            flex: 0 0 auto;
+            width: 100vh;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            padding: 20px;
+            align-items: center;
+        }
+        .text {
+            flex: 1;
+            padding-right: 20px;
+        }
+        .text h3 {
+            color: green;
+        }
+        .text h1 {
+            font-size: 28px;
+            margin: 10px 0;
+            color: #14213d;
+        }
+        .text p {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .text button {
+            padding: 10px 20px;
+            background: #14213d;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+        .image img {
+            width: 200px;
+            border-radius: 10px;
+        }
+
+        /* Optional: scrollbar styling */
+        .slider-container::-webkit-scrollbar {
+            height: 8px;
+        }
+        .slider-container::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h2 style="text-align:center;">Our Special Dishes</h2>
+
+<div class="slider-container">
+    <div class="slider-track">
+        <%
+            if (menuList == null && !menuList.isEmpty()) {
+                for (Dish dish : menuList) {
+        %>
+        <div class="card">
+            <div class="text">
+                <h3>Special Dish</h3>
+                <h1><%= dish.getName() %></h1>
+                <p><%= dish.getDescription() %></p>
+                <button>Order Now</button>
+            </div>
+            <div class="image">
+                <img src="<%= dish.getImagePath() %>" alt="food image"/>
+            </div>
+        </div>
+        <%
+                }
+            } else {
+        %>
+        <p>No dishes found.</p>
+        <%
+            }
+        %>
+    </div>
+</div>
+
+</body>
+</html>

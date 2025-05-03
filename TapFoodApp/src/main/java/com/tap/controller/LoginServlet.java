@@ -54,36 +54,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-//@WebServlet("/Login")
-//public class LoginServlet extends HttpServlet {
-//
-//    private UserImp userImp;
-//
-//    @Override
-//    public void init() throws ServletException {
-//        userImp = new UserImp();
-//    }
-//
-//    @Override
-//    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//
-//        String email = request.getParameter("email");
-//        String password = request.getParameter("password");
-//
-//        if (email == null || password == null || email.isEmpty() || password.isEmpty()) {
-//            response.sendRedirect("Login.html?error=emptyFields");
-//            return;
-//        }
-//
-//        boolean isValid = userImp.isValidUser(email, password);
-//
-//        if (isValid) {
-//        	session.setAttribute("userName", userName);
-//			resp.sendRedirect("CallingRestaurantServlet");
-//           
-//        } else {
-//            response.sendRedirect("Login.html?error=invalidCredentials");
-//        }
-//    }
-//}
