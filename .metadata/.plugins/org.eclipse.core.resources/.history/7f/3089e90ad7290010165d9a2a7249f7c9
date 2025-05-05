@@ -24,28 +24,18 @@ public class ResturantServlet extends HttpServlet {
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+		RestaurantImp rest = new RestaurantImp();
+		ArrayList<Restaurant> restaurant = rest.getAllRestaurant();
+		DishDAOImp disDao = new DishDAOImp();
 
-		
-		
-		
-		   RestaurantImp rest = new RestaurantImp();
-		    ArrayList<Restaurant> restaurant = rest.getAllRestaurant();
-		    DishDAOImp disDao = new DishDAOImp();
+		List<Dish> dishlist = disDao.getAllDishes();
 
-			List<Dish> dishlist = disDao.getAllDishes();
-	      
-			HttpSession sess = req.getSession();
-			sess.setAttribute("restaurant", restaurant);
-			sess.setAttribute("dishlist", dishlist);
-			
-			
-			
-			
-			
-			
-		    RequestDispatcher rd = req.getRequestDispatcher("ResturentMain.jsp");
-			rd.forward(req, resp);
+		HttpSession sess = req.getSession();
+		sess.setAttribute("restaurant", restaurant);
+		sess.setAttribute("dishlist", dishlist);
+
+		RequestDispatcher rd = req.getRequestDispatcher("ResturentMain.jsp");
+		rd.forward(req, resp);
 
 	}
 

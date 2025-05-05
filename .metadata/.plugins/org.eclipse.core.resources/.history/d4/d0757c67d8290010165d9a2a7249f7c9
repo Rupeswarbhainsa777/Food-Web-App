@@ -72,20 +72,16 @@ List<Dish> menuList = (List<Dish>) session.getAttribute("dishlist");
         }
 
         .card1 {
-         display: flex;
-            flex-direction: row;  
+            display: flex;
+            flex-direction: row;
             background: white;
             border-radius: 15px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            padding: 30px;
-            width: 80%;
-            max-width: 8800px;
-        
+            padding: 20px;
+            width: 85%;
+            max-width: 880px;
             align-items: center;
-            justify-content: space-between;
-            gap: 30px;
-            
-           
+            gap: 20px;
         }
 
         .text1 {
