@@ -77,7 +77,8 @@ public class RestaurantImp implements ResturantDao {
             e.printStackTrace();
         }
     }
-
+    
+   
     @Override
     public void deleteRestaurant(int restaurantId) {
         try (PreparedStatement pstmt = con.prepareStatement(DELETE_RESTAURANT)) {

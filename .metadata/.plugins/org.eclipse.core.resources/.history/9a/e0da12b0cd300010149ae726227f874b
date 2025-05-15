@@ -1,0 +1,56 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List" %>
+<%@ page import="com.tap.modeal.Restaurant" %>
+
+<%
+    List<Restaurant> restaurants = (List<Restaurant>) session.getAttribute("restaurant");
+%>
+
+<html>
+<head>
+    <title>Restaurant Info</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .restaurant-info {
+            margin-top: 100px;
+            text-align: center;
+        }
+        .restaurant-info h1 {
+            font-size: 2.5rem;
+        }
+        .restaurant-info p {
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+   <%
+    if (restaurants != null && !restaurants.isEmpty()) {
+%>
+    <h2 class="mb-4">Restaurant Details</h2>
+<%
+        for (Restaurant res : restaurants) {
+%>
+    <div class="card mb-4">
+        <div class="card-body">
+            <h3 class="card-title"><%= res.getName() %></h3>
+            <p class="card-text"><strong>Address:</strong> <%= res.getAddress() %></p>
+        </div>
+    </div>
+<%
+        }
+    } else {
+%>
+    <h1>No Restaurant Data Found</h1>
+<%
+    }
+%>
+   
+    </div>
+</body>
+</html>
+
+
+
+
+

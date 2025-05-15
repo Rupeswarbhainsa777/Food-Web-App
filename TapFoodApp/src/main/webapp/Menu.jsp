@@ -76,7 +76,7 @@
         <ul class="nav">
             <li class="nav-item"><a class="nav-link text-dark" href="home.jsp">Home</a></li>
             <li class="nav-item"><a class="nav-link text-dark" href="cart.jsp">Cart</a></li>
-            <li class="nav-item"><a class="nav-link text-dark" href="LogoutServlet">Logout</a></li>
+            <li class="nav-item"><a class="nav-link text-dark" href="Login.html">Logout</a></li>
         </ul>
     </nav>
 </header>

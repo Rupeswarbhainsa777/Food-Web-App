@@ -1,7 +1,0 @@
-package com.tap.Dao;
-
-public interface Dishdao 
-{
-	Dish getSpecialDish();
-
-}

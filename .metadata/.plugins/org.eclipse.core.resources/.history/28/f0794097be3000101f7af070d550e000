@@ -1,0 +1,46 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List" %>
+<%@ page import="your.package.MenuItem" %> <!-- Replace with your actual MenuItem class package -->
+
+<html>
+<head>
+    <title>Restaurant Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .card {
+            margin: 15px;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        .card img {
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            height: 200px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h2 class="text-center">Welcome to the Restaurant Management Dashboard!</h2>
+        <div class="row">
+            <%
+            List<Restaurant> menuList = (List<Restaurant>) session.getAttribute("restaurants");
+                if (menuList != null) {
+                    for (MenuItem item : menuList) {
+            %>
+                <div class="col-md-4">
+                 
+                </div>
+            <%
+                    }
+                } else {
+            %>
+                <p class="text-center">No menu items available.</p>
+            <%
+                }
+            %>
+        </div>
+    </div>
+</body>
+</html>

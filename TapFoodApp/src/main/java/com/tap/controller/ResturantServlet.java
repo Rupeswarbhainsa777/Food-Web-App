@@ -28,8 +28,8 @@ public class ResturantServlet extends HttpServlet {
 
 		
 		
-		
-		   RestaurantImp rest = new RestaurantImp();
+		 
+		     RestaurantImp rest = new RestaurantImp();
 		    ArrayList<Restaurant> restaurant = rest.getAllRestaurant();
 		    DishDAOImp disDao = new DishDAOImp();
 

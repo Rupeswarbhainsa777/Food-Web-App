@@ -51,7 +51,7 @@
     <h1>Welcome to Portal</h1>
 
     <!-- Admin Login -->
-    <form action="AdminLogin.jsp" method="post">
+    <form action="adminlogin.html" method="post">
         <button type="submit" class="role-button">Admin Login</button>
     </form>
 

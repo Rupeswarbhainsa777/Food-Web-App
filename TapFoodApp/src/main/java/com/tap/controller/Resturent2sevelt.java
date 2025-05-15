@@ -37,10 +37,7 @@ public class Resturent2sevelt extends HttpServlet {
 		HttpSession sess = req.getSession();
 		sess.setAttribute("restaurant", restaurant);
 		sess.setAttribute("dishlist", dishlist);
-		
-		
-		
-		
+	
 		
 		
 		 RequestDispatcher rd = req.getRequestDispatcher("resturent.jsp");
