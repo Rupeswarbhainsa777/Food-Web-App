@@ -74,9 +74,25 @@ Cart Page
 Check out Page
 ![Screenshot 2025-05-09 014356](https://github.com/user-attachments/assets/fab92716-976d-4d51-b927-ed30eb21341f)
 
+
 Confiramtion Page
 ![Screenshot 2025-05-09 014408](https://github.com/user-attachments/assets/d6f11884-eeb4-441b-9fcf-fbec8ee084b0)
 
 Track your order Page
 
 ![Screenshot 2025-05-09 014428](https://github.com/user-attachments/assets/a4a3458c-7f08-4771-a4dd-dc633f5fe187)
+
+
+ 
+Admin Login Page
+![Screenshot 2025-05-27 093008](https://github.com/user-attachments/assets/94a5a03b-1c92-4a58-94cf-6c66876b94b1)
+
+Manage Page 
+![Screenshot 2025-05-27 093021](https://github.com/user-attachments/assets/f703b462-a130-466b-a6cb-e6293cdf03d9)
+
+Add Resturent Page 
+![Screenshot 2025-05-27 093032](https://github.com/user-attachments/assets/8cdda880-151b-40d0-b859-dd4e5e10158b)
+
+Add Menu Page
+![Screenshot 2025-05-27 093257](https://github.com/user-attachments/assets/bb467272-7bd4-42c0-b503-4fec94a398b4)
+
