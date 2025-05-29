@@ -21,8 +21,8 @@
 
 ## 🛠 Technologies Used
 
-* *Backend:* Java, Spring Boot
-* *Frontend:* HTML, CSS, JavaScript (Thymeleaf)
+* *Backend:* Java, Jee/Servlet/ Jdbc
+* *Frontend:* HTML, CSS, JavaScript
 * *Database:* MySQL
 * *Build Tool:* Maven
 
