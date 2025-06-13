@@ -27,7 +27,27 @@
 * *Build Tool:* Maven
 
 ---
+## 📁 Project Structure
 
+```
+tap-food-app/
+│
+├── src/
+│ ├── main/
+│ │ ├── java/com/tapfoods/
+│ │ │ ├── controller/ # Handles HTTP requests
+│ │ │ ├── model/ # pojo class 
+│ │ │ ├── dao interface/ 
+│ │ │ ├── dao implementation / 
+│ │ │ └── application.properties # Configuration
+│ │ └── webapp/ # jsp, htm ,css ,img 
+│ └── test/ # Unit/integration tests
+│
+├── db/ # SQL scripts
+├── README.md # Project documentation
+├── pom.xml # Maven configuration
+└── .gitignore # Git ignore rules
+```
 
 
 ## Screen Sort
