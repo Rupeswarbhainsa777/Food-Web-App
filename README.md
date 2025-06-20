@@ -94,5 +94,5 @@ Add Resturent Page
 ![Screenshot 2025-05-27 093032](https://github.com/user-attachments/assets/8cdda880-151b-40d0-b859-dd4e5e10158b)
 
 Add Menu Page
-![Screenshot 2025-05-27 093257](https://github.com/user-attachments/assets/bb467272-7bd4-42c0-b503-4fec94a398b4)
+
 
